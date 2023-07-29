@@ -7,13 +7,21 @@ const BranchesPage = () => {
   const branches = data?.data;
 
   return (
-    <div>
-      <div className="overflow-x-auto">
+    <>
+      <div className="flex justify-center items-center ">
+        <input
+          type="text"
+          placeholder="Search here..."
+          className="input input-bordered input-primary w-full max-w-xs"
+        />
+        <button className="mx-2 btn btn-primary">Search</button>
+      </div>
+      <div className="overflow-x-auto my-10">
         <table className="table">
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Branch Name</th>
+              <th>Name</th>
               <th>District</th>
               <th>Address</th>
               <th>Map</th>
@@ -29,7 +37,7 @@ const BranchesPage = () => {
                   <td>{branch.branchAddress}</td>
                   <td>
                     <Link
-                      className="link link-hover"
+                      className="link link-primary link-hover"
                       href={branch.branchMapLink}
                     >
                       See on google maps
@@ -40,7 +48,7 @@ const BranchesPage = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 

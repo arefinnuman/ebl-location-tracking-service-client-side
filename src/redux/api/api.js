@@ -8,7 +8,24 @@ export const apiSlice = createApi({
     getBranches: builder.query({
       query: () => "/ebl-branches",
     }),
+
+    getSubBranches: builder.query({
+      query: () => "/ebl-sub-branches/",
+    }),
+
+    getAgentOutlets: builder.query({
+      query: () => "/ebl-agents/",
+    }),
+
+    get365Booths: builder.query({
+      query: () => "/ebl-365/",
+    }),
   }),
 });
 
-export const { useGetBranchesQuery } = apiSlice;
+export const {
+  useGetBranchesQuery,
+  useGetSubBranchesQuery,
+  useGetAgentOutletsQuery,
+  useGet365BoothsQuery,
+} = apiSlice;
