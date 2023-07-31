@@ -1,6 +1,6 @@
-/* eslint-disable react/jsx-key */
 import RootLayout from "@/components/layout/RootLayout";
-import AllLocationTable from "@/components/ui/allLocationTable";
+import AllLocationTable from "@/components/ui/AllLocationTable";
+
 import { useGetAllNetworksQuery } from "@/redux/api/api";
 
 const AllLocationPage = () => {

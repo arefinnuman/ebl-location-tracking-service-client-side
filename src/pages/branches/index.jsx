@@ -1,67 +1,87 @@
-/* eslint-disable @next/next/no-img-element */
 import RootLayout from "@/components/layout/RootLayout";
 import { useGetBranchesQuery } from "@/redux/api/api";
-import Link from "next/link";
+import Image from "next/image";
 
 const BranchesPage = () => {
   const { data, isLoading } = useGetBranchesQuery();
   const branches = data?.data;
 
   return (
-    <section className="flex justify-center">
-      <div className="w-5/6 mr-6">
-        <div className="flex justify-center items-center ">
-          <input
-            type="text"
-            placeholder="Search here..."
-            className="input input-bordered input-primary w-full max-w-xs"
-          />
-          <button className="mx-2 btn btn-primary">Search</button>
+    <>
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <span className="loading loading-infinity loading-lg"></span>
         </div>
-        {isLoading ? (
-          <div className="flex justify-center items-center min-h-screen">
-            <span className="loading loading-infinity loading-lg"></span>
+      ) : (
+        <>
+          <div className="flex flex-col md:flex-row justify-center items-center mb-6">
+            <input
+              type="text"
+              placeholder="Search here..."
+              className="input input-bordered input-primary w-full max-w-xs mb-4 md:mb-0 md:mr-4"
+            />
+            <button className="px-3 py-2 btn btn-primary md:px-4 md:py-2">
+              Search
+            </button>
           </div>
-        ) : (
-          <div className="overflow-x-auto my-10 shadow-xl rounded-xl">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="text-center">Sl</th>
-                  <th className="text-center">Name</th>
-                  <th className="text-center">District</th>
-                  <th className="text-center">Address</th>
-                  <th className="text-center">Map</th>
-                </tr>
-              </thead>
-              <tbody>
-                {branches &&
-                  branches.map((branch) => (
-                    <tr className="hover" key={branch._id}>
-                      <td>{branch.serialNo}</td>
-                      <td>{branch.branchName}</td>
-                      <td>{branch.branchDivision}</td>
-                      <td>{branch.branchAddress}</td>
-                      <td>
-                        <Link
-                          className="link link-primary link-hover"
-                          href={branch.branchMapLink}
-                          target="_blank"
-                        >
-                          See on google maps
-                        </Link>
-                      </td>
+          <section className="flex flex-col md:flex-row justify-center">
+            <div className="w-full max-w-3xl px-6 mx-auto bg-white rounded-lg">
+              <div className="overflow-x-auto">
+                <table className="table w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-4 py-3 border">Sl</th>
+                      <th className="px-4 py-3 border">Name</th>
+                      <th className="px-4 py-3 border">District</th>
+                      <th className="px-4 py-3 border">Address</th>
+                      <th className="px-4 py-3 border">Google Map Link</th>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-      <div className="cols-span-1">
-        <img src="https://i.ibb.co/m5xN8kQ/static-Map.png" alt="" />
-      </div>
-    </section>
+                  </thead>
+                  <tbody>
+                    {branches &&
+                      branches.map((branch) => (
+                        <tr className="hover:bg-gray-50" key={branch._id}>
+                          <td className="px-4 py-3 text-center border">
+                            {branch.serialNo}
+                          </td>
+                          <td className="px-4 py-3 border">
+                            {branch.branchName}
+                          </td>
+                          <td className="px-4 py-3 border">
+                            {branch.branchDivision}
+                          </td>
+                          <td className="px-4 py-3 border md:w-1/3">
+                            {branch.branchAddress}
+                          </td>
+                          <td className="px-4 py-3 border">
+                            <a
+                              className="link link-primary link-hover"
+                              href={branch.branchMapLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Click Here
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="w-full md:w-1/3 px-6 mx-auto bg-white rounded-lg">
+              <Image
+                width={500}
+                height={500}
+                src="https://i.ibb.co/m5xN8kQ/static-Map.png"
+                alt=""
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+          </section>
+        </>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import Link from "next/link";
 
 const HomeCardDetails = ({ card }) => {
@@ -6,7 +6,9 @@ const HomeCardDetails = ({ card }) => {
   return (
     <>
       <article className="flex flex-col shadow-2xl rounded-2xl overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 mb-10 gap-5">
-        <img
+        <Image
+          width={500}
+          height={500}
           alt=""
           className="object-cover w-full h-52 md:h-60 lg:h-64"
           src={image}

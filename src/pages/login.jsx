@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-
+import Image from "next/image";
 import Link from "next/link";
 
 const LoginPage = () => {
@@ -7,7 +6,12 @@ const LoginPage = () => {
     <div className="min-h-screen flex justify-center items-center">
       <div className="container flex flex-col mx-auto items-center lg:flex-row">
         <div className="w-1/2">
-          <img src="https://i.ibb.co/4RgmNFB/IMG-5668.jpg" alt="" />
+          <Image
+            width={500}
+            height={500}
+            src="https://i.ibb.co/4RgmNFB/IMG-5668.jpg"
+            alt=""
+          />
         </div>
         <div className="flex flex-col w-1/2 p-6  md:p-8 lg:p-12">
           <h2 className="text-3xl font-semibold leadi">

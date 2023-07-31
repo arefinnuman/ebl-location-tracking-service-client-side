@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-
+import Image from "next/image";
 import Link from "next/link";
 
 const WelcomeSection = () => {
@@ -8,7 +7,9 @@ const WelcomeSection = () => {
       <section>
         <div className="container flex flex-col mx-auto items-center lg:flex-row">
           <div className="w-full lg:w-1/2">
-            <img
+            <Image
+              width={500}
+              height={500}
               src="https://i.ibb.co/4RgmNFB/IMG-5668.jpg"
               alt=""
               className="w-full"
@@ -28,10 +29,10 @@ const WelcomeSection = () => {
               ></path>
             </svg>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-center md:text-left">
-              Welcome to Eastern Bank
+              Welcome to Digital Banking
               <br />
               <span className="text-base md:text-lg lg:text-xl">
-                Location Tracking Service by DFS
+                Location Tracking Service
               </span>
             </h2>
 

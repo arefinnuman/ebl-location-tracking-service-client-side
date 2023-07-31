@@ -42,7 +42,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link href="/" className="flex justify-center items-center">
-          <Image src={easternBankImage} alt="logo" />
+          <Image width={500} height={500} src={easternBankImage} alt="logo" />
         </Link>
       </div>
       <div className="navbar-end hidden lg:flex">
