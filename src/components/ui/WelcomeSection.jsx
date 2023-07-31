@@ -5,20 +5,21 @@ import Link from "next/link";
 const WelcomeSection = () => {
   return (
     <>
-      <section className="">
+      <section>
         <div className="container flex flex-col mx-auto items-center lg:flex-row">
-          <div className="w-1/2">
+          <div className="w-full lg:w-1/2">
             <img
-              src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              src="https://i.ibb.co/4RgmNFB/IMG-5668.jpg"
               alt=""
+              className="w-full"
             />
           </div>
-          <div className="flex flex-col w-1/2 p-6  md:p-8 lg:p-12">
+          <div className="flex flex-col w-full lg:w-1/2 p-6 md:p-8 lg:p-12">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-8 h-8 mb-8 text-primary"
+              className="w-8 h-8 mb-8 text-primary hidden lg:block"
             >
               <path
                 fillRule="evenodd"
@@ -26,24 +27,31 @@ const WelcomeSection = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-            <h2 className="text-3xl font-semibold leadi">
-              Welcome to Eastern Bank Location Tracking Service!
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-center md:text-left">
+              Welcome to Eastern Bank
+              <br />
+              <span className="text-base md:text-lg lg:text-xl">
+                Location Tracking Service by DFS
+              </span>
             </h2>
-            <p className="mt-4 mb-8">
-              Discover the ease of finding your way with us as your trusted
-              guide. Whether you are searching for the nearest Eastern Bank
-              branch, an ATM, or any financial assistance, we are here to assist
-              you on your journey.
+
+            <p className="mt-4 mb-8 text-center lg:text-left">
+              The Digital Financial Service of Eastern Bank wishes you well! We
+              are delighted to have you use our location tracking service.
+              Prepare to enjoy easier navigation to quickly find the Eastern
+              Bank locations closest to you.
               <br />
               <br />
               Start exploring with us today, and welcome to a new era of
               effortless navigation with Eastern Bank!
             </p>
-            <Link href="/books">
-              <button className="self-start px-10 py-3 text-lg font-medium rounded-3xl bg-secondary text-black">
-                Get started
-              </button>
-            </Link>
+            <div className="flex justify-center lg:justify-start">
+              <Link href="/all-locations">
+                <button className="btn btn-secondary rounded-2xl">
+                  View all Locations
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -52,3 +60,4 @@ const WelcomeSection = () => {
 };
 
 export default WelcomeSection;
+

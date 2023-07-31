@@ -20,6 +20,10 @@ export const apiSlice = createApi({
     get365Booths: builder.query({
       query: () => "/ebl-365/",
     }),
+
+    getAllNetworks: builder.query({
+      query: () => "/ebl-networks/",
+    }),
   }),
 });
 
@@ -28,4 +32,6 @@ export const {
   useGetSubBranchesQuery,
   useGetAgentOutletsQuery,
   useGet365BoothsQuery,
+  useGetAllNetworksQuery,
 } = apiSlice;
+

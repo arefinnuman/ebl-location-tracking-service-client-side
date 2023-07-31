@@ -5,7 +5,7 @@ import Link from "next/link";
 const SubBranchesPage = () => {
   const { data } = useGetSubBranchesQuery();
   const subBranches = data?.data;
-  console.log(subBranches);
+
   return (
     <>
       <div className="overflow-x-auto">
@@ -49,3 +49,4 @@ export default SubBranchesPage;
 SubBranchesPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+

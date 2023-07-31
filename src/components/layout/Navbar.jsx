@@ -6,7 +6,7 @@ const Navbar = () => {
   const navBarItems = (
     <>
       <li>
-        <Link href="/books">Locations</Link>
+        <Link href="/all-locations">Locations</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
@@ -53,3 +53,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
