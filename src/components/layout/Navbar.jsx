@@ -14,6 +14,39 @@ const Navbar = () => {
     </>
   );
 
+  const menuItems = (
+    <>
+      <li>
+        <Link href="/branches/create">Create Branch</Link>
+      </li>
+
+      <li>
+        <Link href="/sub-branches/create">Create sub Branch</Link>
+      </li>
+
+      <li>
+        <Link href="/agent-banking-outlets/create">Create Agent Outlets</Link>
+      </li>
+
+      <li>
+        <Link href="/ebl-365-booths/create">Create Ebl 365</Link>
+      </li>
+
+      <li>
+        <Link href="/sign-up">Create a User</Link>
+      </li>
+      <li>
+        <Link href="/create-admin">Create an Admin</Link>
+      </li>
+      <li>
+        <Link href="/all-locations">View all Locations</Link>
+      </li>
+      <li>
+        <Link href="/users">View All users</Link>
+      </li>
+    </>
+  );
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -45,8 +78,24 @@ const Navbar = () => {
           <Image width={300} height={500} src={easternBankImage} alt="logo" />
         </Link>
       </div>
+
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navBarItems}</ul>
+        <div>
+          <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            <label
+              htmlFor="my-drawer-4"
+              className="drawer-button btn-primary btn btn-sm px-4 py-2 btn-outline "
+            >
+              Dashboard
+            </label>
+          </div>
+          <div className="drawer-side">
+            <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+            <ul className="menu p-4 w-80 h-full bg-base-200 ">{menuItems}</ul>
+          </div>
+        </div>
       </div>
     </div>
   );

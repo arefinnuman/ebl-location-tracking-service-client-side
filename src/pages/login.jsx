@@ -1,7 +1,51 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      id: id,
+      password: password,
+    };
+    console.log(userData);
+
+    (async () => {
+      try {
+        const rawResponse = await fetch(
+          "http://localhost:5555/api/v1/auth/login",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }
+        );
+        const content = await rawResponse.json();
+
+        localStorage.setItem("token", content?.data?.accessToken);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+
+    // setId("");
+    // setPassword("");
+  };
+
+  const handleEmployeeIdInput = (e) => {
+    setId(e.target.value);
+  };
+  const handlePasswordInput = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="container flex flex-col mx-auto items-center lg:flex-row bg-white  rounded-lg">
@@ -21,30 +65,38 @@ const LoginPage = () => {
             <span> DFS</span>
           </h2>
 
-          <input
-            type="text"
-            placeholder="Employee ID"
-            className="input input-bordered input-primary w-full max-w-md my-2"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-bordered input-primary w-full max-w-md my-2"
-          />
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Employee ID"
+              onChange={handleEmployeeIdInput}
+              value={id}
+              className="input input-bordered input-primary w-full max-w-md my-2"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={handlePasswordInput}
+              value={password}
+              className="input input-bordered input-primary w-full max-w-md my-2"
+            />
 
-          <p className="text-gray-600 mb-4">
-            If you are new, you need to{" "}
-            <span>
-              <Link className="text-blue-500" href="/sign-up">
-                sign up
-              </Link>
-            </span>
-          </p>
-          <Link href="/all-locations">
-            <button className="btn btn-secondary rounded-2xl mt-2">
+            <p className="text-gray-600 mb-4">
+              If you are new, you need to{" "}
+              <span>
+                <Link className="text-blue-500" href="/sign-up">
+                  sign up
+                </Link>
+              </span>
+            </p>
+
+            <button
+              type="submit"
+              className="btn btn-secondary rounded-2xl mt-2"
+            >
               Submit
             </button>
-          </Link>
+          </form>
         </div>
       </div>
     </div>

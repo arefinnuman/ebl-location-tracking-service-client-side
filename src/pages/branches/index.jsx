@@ -10,6 +10,7 @@ const BranchesPage = () => {
     lat: 40.7128,
     lng: -74.006,
   };
+
   const containerStyle = {
     width: "500px",
     height: "300px",

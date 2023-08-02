@@ -2,7 +2,10 @@ import RootLayout from "@/components/layout/RootLayout";
 import HomeCardSection from "@/components/ui/HomeCardSection";
 import WelcomeSection from "@/components/ui/WelcomeSection";
 
+
 export default function HomePage() {
+ 
+
   return (
     <>
       <WelcomeSection />

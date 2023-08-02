@@ -5,6 +5,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5555/api/v1",
   }),
+  tagTypes: ["eblbranches", "eblsubbranches", "eblagents", "ebl365"],
 
   endpoints: (builder) => ({
     getBranches: builder.query({
@@ -26,6 +27,52 @@ export const apiSlice = createApi({
     getAllNetworks: builder.query({
       query: () => "/ebl-networks/",
     }),
+
+    postBranch: builder.mutation({
+      query: (data) => ({
+        url: "/ebl-branches/",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["eblbranches"],
+    }),
+
+    postSubBranch: builder.mutation({
+      query: (data) => ({
+        url: "/ebl-sub-branches/",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["eblsubbranches"],
+    }),
+
+    postAgentOutlets: builder.mutation({
+      query: (data) => ({
+        url: "/ebl-agents/",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["eblagents"],
+    }),
+
+    post365Outlets: builder.mutation({
+      query: (data) => ({
+        url: "/ebl-365/",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["ebl365"],
+    }),
+
+    login: builder.mutation({
+      query: (data) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: { ...data },
+      }),
+      
+    }),
+
   }),
 });
 
@@ -35,5 +82,10 @@ export const {
   useGetAgentOutletsQuery,
   useGet365BoothsQuery,
   useGetAllNetworksQuery,
+  usePostBranchMutation,
+  usePostSubBranchMutation,
+  usePostAgentOutletsMutation,
+  usePost365OutletsMutation,
+  useLoginMutation,
 } = apiSlice;
 

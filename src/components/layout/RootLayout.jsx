@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -10,3 +18,4 @@ export default function RootLayout({ children }) {
     </div>
   );
 }
+
