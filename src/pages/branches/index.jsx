@@ -1,10 +1,19 @@
 import RootLayout from "@/components/layout/RootLayout";
 import { useGetBranchesQuery } from "@/redux/api/api";
-import Image from "next/image";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const BranchesPage = () => {
   const { data, isLoading } = useGetBranchesQuery();
   const branches = data?.data;
+
+  const center = {
+    lat: 40.7128,
+    lng: -74.006,
+  };
+  const containerStyle = {
+    width: "500px",
+    height: "300px",
+  };
 
   return (
     <>
@@ -70,13 +79,13 @@ const BranchesPage = () => {
               </div>
             </div>
             <div className="w-full md:w-1/3 px-6 mx-auto bg-white rounded-lg">
-              <Image
-                width={500}
-                height={500}
-                src="https://i.ibb.co/m5xN8kQ/static-Map.png"
-                alt=""
-                className="rounded-lg w-full h-auto"
-              />
+              <LoadScript googleMapsApiKey="YOUR_API_KEY">
+                <GoogleMap
+                  center={center}
+                  mapContainerClassName={containerStyle}
+                  zoom={10}
+                ></GoogleMap>
+              </LoadScript>
             </div>
           </section>
         </>
