@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 
-const Navbar = () => {
+const DashboardNavbar = () => {
   const navBarItems = (
     <>
       <li>
@@ -15,7 +15,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 flex justify-between items-center">
+    <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -44,12 +44,12 @@ const Navbar = () => {
         <div className="flex justify-around items-center">
           <Link href="/" className="flex justify-between items-center">
             <Image width={300} height={500} src={easternBankImage} alt="logo" />
+            <li className="btn btn-primary btn-sm btn-outline lg:hidden ml-16">
+              <Link href="/dashboard">Dashboard</Link>
+            </li>
           </Link>
         </div>
       </div>
-      <li className="btn btn-primary btn-sm btn-outline lg:hidden">
-        <Link href="/dashboard">Dashboard</Link>
-      </li>
 
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navBarItems}</ul>
@@ -61,4 +61,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default DashboardNavbar;

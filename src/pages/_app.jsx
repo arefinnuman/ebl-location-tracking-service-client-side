@@ -2,6 +2,7 @@ import store from "@/redux/store";
 import "@/styles/globals.css";
 import { Roboto } from "next/font/google";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
 const roboto = Roboto({
@@ -21,9 +22,9 @@ export default function App({ Component, pageProps }) {
       <div className={roboto.className}>
         <Provider store={store}>
           {getLayout(<Component {...pageProps} />)}
+          <Toaster />
         </Provider>
       </div>
     </>
   );
 }
-

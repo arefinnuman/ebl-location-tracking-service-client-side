@@ -1,4 +1,4 @@
-import RootLayout from "@/components/layout/RootLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePost365OutletsMutation } from "@/redux/api/api";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ export default function Create365BoothPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const branchData = {
+    const ata = {
       ebl365Name: name,
       ebl365Division: division,
       ebl365Address: address,
@@ -27,7 +27,7 @@ export default function Create365BoothPage() {
       },
     };
 
-    create365(branchData);
+    create365(ata);
     setName("");
     setDivision("");
     setAddress("");
@@ -62,11 +62,13 @@ export default function Create365BoothPage() {
   return (
     <div className="min-h-screen flex justify-center items-center p-4 md:p-12 sm:p-0">
       <form className="w-full max-w-md" action="" onSubmit={handleSubmit}>
-        <h1 className="text-xl font-bold mb-4 text-center">Add Branch</h1>
+        <h1 className="text-xl font-bold mb-4 text-center">
+          Add a new 365 booths name
+        </h1>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Name</span>
+            <span className="label-text">Name</span>
           </label>
           <input
             type="text"
@@ -74,12 +76,13 @@ export default function Create365BoothPage() {
             value={name}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Division</span>
+            <span className="label-text">Division</span>
           </label>
           <input
             type="text"
@@ -87,12 +90,13 @@ export default function Create365BoothPage() {
             value={division}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Address</span>
+            <span className="label-text">Address</span>
           </label>
           <input
             type="text"
@@ -100,12 +104,13 @@ export default function Create365BoothPage() {
             value={address}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Map Link</span>
+            <span className="label-text">Map Link</span>
           </label>
           <input
             type="text"
@@ -113,12 +118,13 @@ export default function Create365BoothPage() {
             value={mapLink}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Code</span>
+            <span className="label-text">Code</span>
           </label>
           <input
             type="text"
@@ -126,13 +132,11 @@ export default function Create365BoothPage() {
             value={code}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Branch Location</span>
-          </label>
           <div className="grid grid-cols-2 gap-2">
             <div className="form-control">
               <label className="label">
@@ -144,6 +148,7 @@ export default function Create365BoothPage() {
                 value={lat}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
             <div className="form-control">
@@ -156,6 +161,7 @@ export default function Create365BoothPage() {
                 value={long}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
           </div>
@@ -170,6 +176,5 @@ export default function Create365BoothPage() {
 }
 
 Create365BoothPage.getLayout = function getLayout(page) {
-  return <RootLayout>{page}</RootLayout>;
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
-

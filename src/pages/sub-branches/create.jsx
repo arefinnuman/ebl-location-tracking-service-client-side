@@ -1,4 +1,4 @@
-import RootLayout from "@/components/layout/RootLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePostSubBranchMutation } from "@/redux/api/api";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export default function CreateSubBranchPage() {
       subBranchAddress: address,
       subBranchMapLink: mapLink,
       subBranchCode: code,
-      subbBranchLocation: {
+      subBranchLocation: {
         lat: lat,
         long: long,
       },
@@ -64,11 +64,13 @@ export default function CreateSubBranchPage() {
   return (
     <div className="min-h-screen flex justify-center items-center p-4 md:p-12 sm:p-0">
       <form className="w-full max-w-md" action="" onSubmit={handleSubmit}>
-        <h1 className="text-xl font-bold mb-4 text-center">Add Branch</h1>
+        <h1 className="text-xl font-bold mb-4 text-center">
+          Add a new Sub Branch
+        </h1>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Sub Branch Name</span>
+            <span className="label-text">Name</span>
           </label>
           <input
             type="text"
@@ -76,12 +78,13 @@ export default function CreateSubBranchPage() {
             value={name}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Sub Branch Division</span>
+            <span className="label-text">Division</span>
           </label>
           <input
             type="text"
@@ -89,12 +92,13 @@ export default function CreateSubBranchPage() {
             value={division}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Sub Branch Address</span>
+            <span className="label-text">Address</span>
           </label>
           <input
             type="text"
@@ -102,12 +106,13 @@ export default function CreateSubBranchPage() {
             value={address}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Sub Branch Map Link</span>
+            <span className="label-text">Map Link</span>
           </label>
           <input
             type="text"
@@ -115,12 +120,13 @@ export default function CreateSubBranchPage() {
             value={mapLink}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Sub Branch Code</span>
+            <span className="label-text">Code</span>
           </label>
           <input
             type="text"
@@ -128,13 +134,11 @@ export default function CreateSubBranchPage() {
             value={code}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Sub Branch Location</span>
-          </label>
           <div className="grid grid-cols-2 gap-2">
             <div className="form-control">
               <label className="label">
@@ -146,6 +150,7 @@ export default function CreateSubBranchPage() {
                 value={lat}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
             <div className="form-control">
@@ -158,6 +163,7 @@ export default function CreateSubBranchPage() {
                 value={long}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
           </div>
@@ -172,6 +178,5 @@ export default function CreateSubBranchPage() {
 }
 
 CreateSubBranchPage.getLayout = function getLayout(page) {
-  return <RootLayout>{page}</RootLayout>;
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
-

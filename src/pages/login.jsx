@@ -1,10 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +16,6 @@ const LoginPage = () => {
       id: id,
       password: password,
     };
-    console.log(userData);
 
     (async () => {
       try {
@@ -29,14 +32,23 @@ const LoginPage = () => {
         );
         const content = await rawResponse.json();
 
-        localStorage.setItem("token", content?.data?.accessToken);
+        if (content?.data?.accessToken) {
+          localStorage.setItem("token", content?.data?.accessToken);
+          toast.success("Login Successful");
+          router.push("/");
+        } else if (content?.success === false) {
+          toast.error(content?.message);
+        } else {
+          toast.error("Login Failed !");
+        }
       } catch (err) {
         console.log(err);
+        toast.error("Login Failed !");
       }
     })();
 
-    // setId("");
-    // setPassword("");
+    setId("");
+    setPassword("");
   };
 
   const handleEmployeeIdInput = (e) => {
@@ -104,4 +116,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

@@ -1,4 +1,4 @@
-import RootLayout from "@/components/layout/RootLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePostAgentOutletsMutation } from "@/redux/api/api";
 import { useState } from "react";
 
@@ -63,12 +63,12 @@ export default function CreateAgentPage() {
     <div className="min-h-screen flex justify-center items-center p-4 md:p-12 sm:p-0">
       <form className="w-full max-w-md" action="" onSubmit={handleSubmit}>
         <h1 className="text-xl font-bold mb-4 text-center">
-          Add Agent Banking Outlets
+          Add a New Agent Banking Outlet
         </h1>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Name</span>
+            <span className="label-text">Name</span>
           </label>
           <input
             type="text"
@@ -76,12 +76,13 @@ export default function CreateAgentPage() {
             value={name}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Division</span>
+            <span className="label-text">Division</span>
           </label>
           <input
             type="text"
@@ -89,12 +90,13 @@ export default function CreateAgentPage() {
             value={division}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Address</span>
+            <span className="label-text">Address</span>
           </label>
           <input
             type="text"
@@ -102,12 +104,13 @@ export default function CreateAgentPage() {
             value={address}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Map Link</span>
+            <span className="label-text">Map Link</span>
           </label>
           <input
             type="text"
@@ -115,12 +118,13 @@ export default function CreateAgentPage() {
             value={mapLink}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Branch Code</span>
+            <span className="label-text">Code</span>
           </label>
           <input
             type="text"
@@ -128,13 +132,11 @@ export default function CreateAgentPage() {
             value={code}
             placeholder="Type here"
             className="input input-bordered w-full"
+            required={true}
           />
         </div>
 
         <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Branch Location</span>
-          </label>
           <div className="grid grid-cols-2 gap-2">
             <div className="form-control">
               <label className="label">
@@ -146,6 +148,7 @@ export default function CreateAgentPage() {
                 value={lat}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
             <div className="form-control">
@@ -158,6 +161,7 @@ export default function CreateAgentPage() {
                 value={long}
                 placeholder="Type here"
                 className="input input-bordered"
+                required={true}
               />
             </div>
           </div>
@@ -172,6 +176,5 @@ export default function CreateAgentPage() {
 }
 
 CreateAgentPage.getLayout = function getLayout(page) {
-  return <RootLayout>{page}</RootLayout>;
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
-
