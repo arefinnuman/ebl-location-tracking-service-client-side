@@ -20,30 +20,23 @@ const DashboardLayout = ({ children }) => {
       <li>
         <Link href="/branches/create">Create Branch</Link>
       </li>
-
       <li>
         <Link href="/sub-branches/create">Create sub Branch</Link>
       </li>
-
       <li>
         <Link href="/agent-banking-outlets/create">Create Agent Outlets</Link>
       </li>
-
       <li>
         <Link href="/ebl-365-booths/create">Create Ebl 365</Link>
       </li>
-
       <li>
-        <Link href="/sign-up">Create a User</Link>
-      </li>
-      <li>
-        <Link href="/create-admin">Create an Admin</Link>
-      </li>
-      <li>
-        <Link href="/all-locations">View all Locations</Link>
+        <Link href="/create-user">Create User</Link>
       </li>
       <li>
         <Link href="/users">View All users</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations">View all Locations</Link>
       </li>
     </>
   );
@@ -107,12 +100,10 @@ const DashboardLayout = ({ children }) => {
       </>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          {children}
-        </div>
+        <div className="drawer-content">{children}</div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
+          <ul className="menu p-4 w-60 h-full bg-base-200 text-base-content">
             {menuItems}
           </ul>
         </div>

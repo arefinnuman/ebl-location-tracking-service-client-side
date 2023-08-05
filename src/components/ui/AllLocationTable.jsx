@@ -4,32 +4,69 @@ const AllLocationTable = ({ network }) => {
   const type = network?.type;
   let name, division, address, mapLink;
 
-  if (type === "eblBranch") {
-    name = network?.eblBranch?.branchName;
-    division = network?.eblBranch?.branchDivision;
-    address = network?.eblBranch?.branchAddress;
-    mapLink = network?.eblBranch?.branchMapLink;
-  } else if (type === "eblSubBranch") {
-    name = network?.eblSubBranch?.subBranchName;
-    division = network?.eblSubBranch?.subBranchDivision;
-    address = network?.eblSubBranch?.subBranchAddress;
-    mapLink = network?.eblSubBranch?.subBranchMapLink;
-  } else if (type === "eblAgent") {
-    name = network?.eblAgent?.agentName;
-    division = network?.eblAgent?.agentDivision;
-    address = network?.eblAgent?.agentAddress;
-    mapLink = network?.eblAgent?.agentMapLink;
-  } else if (type === "ebl365booths") {
-    name = network?.ebl365booths?.boothName;
-    division = network?.ebl365booths?.boothDivision;
-    address = network?.ebl365booths?.boothAddress;
-    mapLink = network?.ebl365booths?.boothMapLink;
-  } else {
-    name = "";
-    division = "";
-    address = "";
-    mapLink = "";
-  }
+  import RootLayout from "@/components/layout/RootLayout";
+import {
+  useGet365BoothsQuery,
+  useGetAgentOutletsQuery,
+  useGetBranchesQuery,
+  useGetSubBranchesQuery,
+} from "@/redux/api/api";
+
+const AllLocationPage = () => {
+  const { data: branchesData } = useGetBranchesQuery();
+  const { data: subBranchesData } = useGetSubBranchesQuery();
+  const { data: agentOutletsData } = useGetAgentOutletsQuery();
+  const { data: ebl365Data } = useGet365BoothsQuery();
+
+  const branches = branchesData?.data || [];
+  const subBranches = subBranchesData?.data || [];
+  const agentOutlets = agentOutletsData?.data || [];
+  const ebl365Booths = ebl365Data?.data || [];
+
+  const combinedData = [...branches, ...subBranches, ...agentOutlets, ...ebl365Booths];
+
+  return (
+    <section className="min-h-screen">
+      <div className="mr-6">
+        {/* ... Your search input and button code ... */}
+        <div className="overflow-x-auto my-10 shadow-xl rounded-xl">
+          <table className="table">
+            <thead>
+              <tr>
+                <th className="text-center">Sl</th>
+                <th className="text-center">Name</th>
+                <th className="text-center">District</th>
+                <th className="text-center">Address</th>
+                <th className="text-center">Map</th>
+              </tr>
+            </thead>
+            <tbody>
+              {combinedData.map((item, index) => (
+                <tr key={index}>
+                  <td className="text-center">{index + 1}</td>
+                  <td className="text-center">{item.name}</td>
+                  <td className="text-center">{item.district}</td>
+                  <td className="text-center">{item.address}</td>
+                  <td className="text-center">
+                    <a href={item.mapLink} target="_blank" rel="noreferrer">
+                      <button className="btn btn-primary">Map</button>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AllLocationPage;
+
+AllLocationPage.getLayout = function getLayout(page) {
+  return <RootLayout>{page}</RootLayout>;
+};
 
   return (
     <>

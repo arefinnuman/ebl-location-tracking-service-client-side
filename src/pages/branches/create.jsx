@@ -63,13 +63,13 @@ export default function CreateBranchPage() {
   };
 
   return (
-    <div className="">
+    <div className="container mx-auto p-8 max-w-lg">
       <form className="w-full max-w-md" action="" onSubmit={handleSubmit}>
-        <h1 className="text-xl font-bold mb-4 text-center">
+        <h1 className="text-xl font-bold mb-3 text-center">
           Make a new branch
         </h1>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Name</span>
           </label>
@@ -78,12 +78,12 @@ export default function CreateBranchPage() {
             onChange={handleNameInput}
             value={name}
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered input-primary w-full       "
             required={true}
           />
         </div>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Division</span>
           </label>
@@ -92,12 +92,12 @@ export default function CreateBranchPage() {
             onChange={handleDivisionInput}
             value={division}
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered input-primary w-full       "
             required={true}
           />
         </div>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Address</span>
           </label>
@@ -106,12 +106,12 @@ export default function CreateBranchPage() {
             onChange={handleAddressInput}
             value={address}
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered input-primary w-full       "
             required={true}
           />
         </div>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Map Link</span>
           </label>
@@ -120,12 +120,12 @@ export default function CreateBranchPage() {
             onChange={handleMapLinkInput}
             value={mapLink}
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered input-primary w-full       "
             required={true}
           />
         </div>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Code</span>
           </label>
@@ -134,12 +134,12 @@ export default function CreateBranchPage() {
             onChange={handleCodeInput}
             value={code}
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered input-primary w-full       "
             required={true}
           />
         </div>
 
-        <div className="form-control mb-4">
+        <div className="form-control mb-3">
           <div className="grid grid-cols-2 gap-2">
             <div className="form-control">
               <label className="label">
@@ -150,7 +150,7 @@ export default function CreateBranchPage() {
                 onChange={handleLatInput}
                 value={lat}
                 placeholder="Type here"
-                className="input input-bordered"
+                className="input input-bordered input-primary"
                 required={true}
               />
             </div>
@@ -163,7 +163,7 @@ export default function CreateBranchPage() {
                 onChange={handleLongInput}
                 value={long}
                 placeholder="Type here"
-                className="input input-bordered"
+                className="input input-bordered input-primary"
                 required={true}
               />
             </div>

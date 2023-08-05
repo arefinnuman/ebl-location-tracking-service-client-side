@@ -1,11 +1,11 @@
 import store from "@/redux/store";
 import "@/styles/globals.css";
-import { Roboto } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
-const roboto = Roboto({
+const poppins = Poppins({
   weight: "400",
   subsets: ["latin"],
 });
@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }) {
         <title>Eastern Bank Limited</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={roboto.className}>
+      <div className={poppins.className}>
         <Provider store={store}>
           {getLayout(<Component {...pageProps} />)}
           <Toaster />

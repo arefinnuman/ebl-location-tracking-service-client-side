@@ -6,6 +6,8 @@ const Ebl365Booths = () => {
   const { data } = useGet365BoothsQuery();
   const ebl365Booths = data?.data;
 
+  
+
   return (
     <>
       <div className="overflow-x-auto">

@@ -28,6 +28,10 @@ export const apiSlice = createApi({
       query: () => "/ebl-networks/",
     }),
 
+    getAllUser: builder.query({
+      query: () => "/users/",
+    }),
+
     postBranch: builder.mutation({
       query: (data) => ({
         url: "/ebl-branches/",
@@ -70,9 +74,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: { ...data },
       }),
-      
     }),
-
   }),
 });
 
@@ -87,5 +89,5 @@ export const {
   usePostAgentOutletsMutation,
   usePost365OutletsMutation,
   useLoginMutation,
+  useGetAllUserQuery,
 } = apiSlice;
-
