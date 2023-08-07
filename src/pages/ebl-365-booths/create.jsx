@@ -1,6 +1,7 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePost365OutletsMutation } from "@/redux/api/api";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function Create365BoothPage() {
   const [name, setName] = useState("");
@@ -21,11 +22,11 @@ export default function Create365BoothPage() {
       ebl365Address: address,
       ebl365MapLink: mapLink,
       ebl365Code: code,
-      ebl365Location: {
-        lat: lat,
-        long: long,
-      },
+      lat: lat,
+      long: long,
     };
+
+    toast.success("365 booth created successfully");
 
     create365(ata);
     setName("");
@@ -82,20 +83,6 @@ export default function Create365BoothPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Division</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleDivisionInput}
-            value={division}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
             <span className="label-text">Address</span>
           </label>
           <input
@@ -110,26 +97,12 @@ export default function Create365BoothPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Map Link</span>
+            <span className="label-text">Division</span>
           </label>
           <input
             type="text"
-            onChange={handleMapLinkInput}
-            value={mapLink}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
-            <span className="label-text">Code</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleCodeInput}
-            value={code}
+            onChange={handleDivisionInput}
+            value={division}
             placeholder="Type here"
             className="input input-bordered input-primary w-full       "
             required={true}

@@ -1,6 +1,7 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePostSubBranchMutation } from "@/redux/api/api";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function CreateSubBranchPage() {
   const [name, setName] = useState("");
@@ -27,9 +28,8 @@ export default function CreateSubBranchPage() {
       },
     };
 
-    console.log(branchData);
-
     createBranch(branchData);
+    toast.success("Sub Branch created successfully");
     setName("");
     setDivision("");
     setAddress("");
@@ -84,20 +84,6 @@ export default function CreateSubBranchPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Division</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleDivisionInput}
-            value={division}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
             <span className="label-text">Address</span>
           </label>
           <input
@@ -112,26 +98,12 @@ export default function CreateSubBranchPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Map Link</span>
+            <span className="label-text">District</span>
           </label>
           <input
             type="text"
-            onChange={handleMapLinkInput}
-            value={mapLink}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
-            <span className="label-text">Code</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleCodeInput}
-            value={code}
+            onChange={handleDivisionInput}
+            value={division}
             placeholder="Type here"
             className="input input-bordered input-primary w-full       "
             required={true}

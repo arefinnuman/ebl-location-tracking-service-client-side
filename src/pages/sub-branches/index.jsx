@@ -1,52 +1,137 @@
 import RootLayout from "@/components/layout/RootLayout";
 import { useGetSubBranchesQuery } from "@/redux/api/api";
-import Link from "next/link";
+import { useState } from "react";
 
-const SubBranchesPage = () => {
-  const { data } = useGetSubBranchesQuery();
+const BranchesPage = () => {
+  const { data, isLoading } = useGetSubBranchesQuery();
   const subBranches = data?.data;
+  console.log(subBranches);
+
+  const branchDivisions = subBranches?.map(
+    (branch) => branch.subBranchDivision
+  );
+  const uniqueBranchDivisions = [...new Set(branchDivisions)];
+
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedDivision, setSelectedDivision] = useState("");
+  const [selectedBranch, setSelectedBranch] = useState(null);
+
+  const filteredSubBranches = subBranches
+    ? subBranches.filter(
+        (subBranch) =>
+          (subBranch.subBranchName
+            .toLowerCase()
+            .includes(searchInput.toLowerCase()) ||
+            subBranch.subBranchDivision
+              .toLowerCase()
+              .includes(searchInput.toLowerCase()) ||
+            subBranch.subBranchAddress
+              .toLowerCase()
+              .includes(searchInput.toLowerCase())) &&
+          (selectedDivision === "" ||
+            subBranch.subBranchDivision === selectedDivision)
+      )
+    : [];
 
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Sl</th>
-              <th>Name</th>
-              <th>District</th>
-              <th>Address</th>
-              <th>Map</th>
-            </tr>
-          </thead>
-          <tbody>
-            {subBranches &&
-              subBranches.map((subBranch) => (
-                <tr className="hover" key={subBranch._id}>
-                  <td>{subBranch.serialNo}</td>
-                  <td>{subBranch.subBranchName}</td>
-                  <td>{subBranch.subBranchDivision}</td>
-                  <td>{subBranch.subBranchAddress}</td>
-                  <td>
-                    <Link
-                      className="link link-primary link-hover"
-                      href={subBranch.subBranchMapLink}
-                    >
-                      See on google maps
-                    </Link>
-                  </td>
-                </tr>
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <span className="loading loading-infinity loading-lg"></span>
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col md:flex-row justify-center items-center mb-6">
+            <input
+              type="text"
+              placeholder="Search here..."
+              className="input input-bordered input-primary w-full max-w-xs mb-4 md:mb-0 md:mr-4"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <select
+              className="input input-bordered input-primary w-full max-w-xs mb-4 md:mb-0 md:mr-4"
+              value={selectedDivision}
+              onChange={(e) => setSelectedDivision(e.target.value)}
+            >
+              <option value="">All Districts</option>
+              {uniqueBranchDivisions.map((division) => (
+                <option key={division} value={division}>
+                  {division}
+                </option>
               ))}
-          </tbody>
-        </table>
-      </div>
+            </select>
+          </div>
+
+          <div className="w-full max-w-6xl px-6 mx-auto bg-white rounded-lg mb-6">
+            <div className="overflow-x-auto">
+              <table className="table w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-4 py-3 border">Sl</th>
+                    <th className="px-4 py-3 border">Name</th>
+                    <th className="px-4 py-3 border">District</th>
+                    <th className="px-4 py-3 border">Address</th>
+                    <th className="px-4 py-3 border">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredSubBranches.map((subBranch, index) => (
+                    <tr className="hover:bg-gray-50" key={subBranch._id}>
+                      <td className="px-4 py-3 text-center border">
+                        {index + 1}
+                      </td>
+                      <td className="px-4 py-3 border">
+                        {subBranch.subBranchName}
+                      </td>
+                      <td className="px-4 py-3 border">
+                        {subBranch.subBranchDivision}
+                      </td>
+                      <td className="px-4 py-3 border md:w-1/2">
+                        {subBranch.subBranchAddress}
+                      </td>
+                      <td className="px-4 py-3 border">
+                        <button
+                          className="btn btn-primary btn-sm btn-outline btn-ghost"
+                          onClick={() => setSelectedBranch(subBranch)}
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {selectedBranch && (
+            <dialog
+              id="my_modal_5"
+              className="modal modal-bottom sm:modal-middle"
+              open
+            >
+              <form method="dialog" className="modal-box">
+                <h1>{selectedBranch.subBranchLocation.lat}</h1>
+                <div className="modal-action">
+                  <button
+                    className="btn"
+                    onClick={() => setSelectedBranch(null)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </dialog>
+          )}
+        </>
+      )}
     </>
   );
 };
 
-export default SubBranchesPage;
-
-SubBranchesPage.getLayout = function getLayout(page) {
+BranchesPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
 
+export default BranchesPage;

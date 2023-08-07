@@ -1,6 +1,7 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { usePostAgentOutletsMutation } from "@/redux/api/api";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function CreateAgentPage() {
   const [name, setName] = useState("");
@@ -11,9 +12,9 @@ export default function CreateAgentPage() {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
 
-  const [createAgent] = usePostAgentOutletsMutation();
+  const [createAgent, { isSuccess }] = usePostAgentOutletsMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const agentData = {
       agentName: name,
@@ -27,7 +28,8 @@ export default function CreateAgentPage() {
       },
     };
 
-    createAgent(agentData);
+    await createAgent(agentData);
+    toast.success("Agent Banking Outlet Created Successfully!");
     setName("");
     setDivision("");
     setAddress("");
@@ -150,4 +152,3 @@ export default function CreateAgentPage() {
 CreateAgentPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
-
