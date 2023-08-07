@@ -1,9 +1,9 @@
-import DashboardLayout from "@/components/layout/DashboardLayout";
-import { usePostBranchMutation } from "@/redux/api/api";
+import { useUpdateBranchMutation } from "@/redux/api/api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-export default function CreateBranchPage() {
+export default function UpdateBranchForm({ selectedBranch }) {
+  const id = selectedBranch._id;
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [address, setAddress] = useState("");
@@ -12,7 +12,7 @@ export default function CreateBranchPage() {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
 
-  const [createBranch] = usePostBranchMutation();
+  const [updateBranch] = useUpdateBranchMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,9 +28,8 @@ export default function CreateBranchPage() {
       },
     };
 
-    toast.success("Branch created successfully");
-
-    createBranch(branchData);
+    toast.success("Branch updated successfully");
+    updateBranch(id, branchData);
     setName("");
     setDivision("");
     setAddress("");
@@ -49,12 +48,6 @@ export default function CreateBranchPage() {
   const handleAddressInput = (e) => {
     setAddress(e.target.value);
   };
-  const handleMapLinkInput = (e) => {
-    setMapLink(e.target.value);
-  };
-  const handleCodeInput = (e) => {
-    setCode(e.target.value);
-  };
   const handleLatInput = (e) => {
     setLat(e.target.value);
   };
@@ -63,51 +56,49 @@ export default function CreateBranchPage() {
   };
 
   return (
-    <div className="container mx-auto p-8 max-w-lg">
-      <form className="w-full max-w-md" action="" onSubmit={handleSubmit}>
+    <div>
+      {" "}
+      <form className="w-full max-w-md" onSubmit={handleSubmit}>
         <h1 className="text-xl font-bold mb-3 text-center">
-          Make a new branch
+          Update {selectedBranch.branchName} branch details
         </h1>
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text"> Name</span>
+            <span className="label-text">Name</span>
           </label>
           <input
             type="text"
             onChange={handleNameInput}
             value={name}
-            placeholder="Type here"
+            placeholder={selectedBranch.branchName}
             className="input input-bordered input-primary w-full       "
-            required={true}
           />
         </div>
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text"> Address</span>
+            <span className="label-text">Address</span>
           </label>
           <input
             type="text"
             onChange={handleAddressInput}
             value={address}
-            placeholder="Type here"
+            placeholder={selectedBranch.branchAddress}
             className="input input-bordered input-primary w-full       "
-            required={true}
           />
         </div>
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text"> Division</span>
+            <span className="label-text">District</span>
           </label>
           <input
             type="text"
             onChange={handleDivisionInput}
             value={division}
-            placeholder="Type here"
+            placeholder={selectedBranch.branchDivision}
             className="input input-bordered input-primary w-full       "
-            required={true}
           />
         </div>
 
@@ -121,9 +112,8 @@ export default function CreateBranchPage() {
                 type="text"
                 onChange={handleLatInput}
                 value={lat}
-                placeholder="Type here"
+                placeholder={selectedBranch.branchLocation.lat}
                 className="input input-bordered input-primary"
-                required={true}
               />
             </div>
             <div className="form-control">
@@ -134,9 +124,8 @@ export default function CreateBranchPage() {
                 type="text"
                 onChange={handleLongInput}
                 value={long}
-                placeholder="Type here"
+                placeholder={selectedBranch.branchLocation.long}
                 className="input input-bordered input-primary"
-                required={true}
               />
             </div>
           </div>
@@ -149,7 +138,3 @@ export default function CreateBranchPage() {
     </div>
   );
 }
-
-CreateBranchPage.getLayout = function getLayout(page) {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};

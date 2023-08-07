@@ -1,10 +1,14 @@
 import RootLayout from "@/components/layout/RootLayout";
+import MapModal from "@/components/ui/mapComponenet";
 import { useGetBranchesQuery } from "@/redux/api/api";
 import { useState } from "react";
 
 const BranchesPage = () => {
   const { data, isLoading } = useGetBranchesQuery();
   const branches = data?.data;
+
+  const branchLocations = branches?.map((branch) => branch?.branchLocation);
+  console.log(branchLocations);
 
   const branchDivisions = branches?.map((branch) => branch.branchDivision);
   const uniqueBranchDivisions = [...new Set(branchDivisions)];
@@ -107,7 +111,8 @@ const BranchesPage = () => {
               open
             >
               <form method="dialog" className="modal-box">
-                <h1>{selectedBranch.branchLocation.lat}</h1>
+                <MapModal selectedBranch={selectedBranch} />
+
                 <div className="modal-action">
                   <button
                     className="btn"

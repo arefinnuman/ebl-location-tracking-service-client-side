@@ -75,6 +75,44 @@ export const apiSlice = createApi({
         body: { ...data },
       }),
     }),
+
+    deleteBranch: builder.mutation({
+      query: (id) => ({
+        url: `/ebl-branches/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["eblbranches"],
+    }),
+
+    deleteSubBranch: builder.mutation({
+      query: (id) => ({
+        url: `/ebl-sub-branches/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    deleteAgentOutlets: builder.mutation({
+      query: (id) => ({
+        url: `/ebl-agents/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    delete365Outlets: builder.mutation({
+      query: (id) => ({
+        url: `/ebl-365/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updateBranch: builder.mutation({
+      query: (id) => ({
+        url: `/ebl-branches/${id}`,
+        method: "PATCH",
+        body: { ...data },
+      }),
+      invalidatesTags: ["eblbranches"],
+    }),
   }),
 });
 
@@ -90,4 +128,9 @@ export const {
   usePost365OutletsMutation,
   useLoginMutation,
   useGetAllUserQuery,
+  useDeleteBranchMutation,
+  useDeleteSubBranchMutation,
+  useDeleteAgentOutletsMutation,
+  useDelete365OutletsMutation,
+  useUpdateBranchMutation,
 } = apiSlice;

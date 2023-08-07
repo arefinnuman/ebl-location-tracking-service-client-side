@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
 const poppins = Poppins({
-  weight: "400",
+  weight: "500",
   subsets: ["latin"],
 });
 
@@ -28,4 +28,3 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
-

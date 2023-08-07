@@ -84,6 +84,7 @@ const BranchesPage = () => {
                     <th className="px-4 py-3 border">Name</th>
                     <th className="px-4 py-3 border">District</th>
                     <th className="px-4 py-3 border">Address</th>
+                    <th className="px-4 py-3 border">Device Availability</th>
                     <th className="px-4 py-3 border">Location</th>
                   </tr>
                 </thead>
@@ -99,6 +100,9 @@ const BranchesPage = () => {
                       </td>
                       <td className="px-4 py-3 border md:w-1/2">
                         {ebl365.ebl365Address}
+                      </td>
+                      <td className="px-4 py-3 border md:w-1/2">
+                        {ebl365.deviceAvailability}
                       </td>
                       <td className="px-4 py-3 border">
                         <button
