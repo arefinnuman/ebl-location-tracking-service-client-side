@@ -49,10 +49,10 @@ const BranchesPage = () => {
                   </thead>
                   <tbody>
                     {branches &&
-                      branches.map((branch) => (
+                      branches.map((branch, index) => (
                         <tr className="hover:bg-gray-50" key={branch._id}>
                           <td className="px-4 py-3 text-center border">
-                            {branch.serialNo}
+                            {index + 1}
                           </td>
                           <td className="px-4 py-3 border">
                             {branch.branchName}

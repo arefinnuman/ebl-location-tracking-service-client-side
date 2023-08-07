@@ -85,20 +85,6 @@ export default function CreateBranchPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text"> Division</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleDivisionInput}
-            value={division}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
             <span className="label-text"> Address</span>
           </label>
           <input
@@ -113,6 +99,20 @@ export default function CreateBranchPage() {
 
         <div className="form-control mb-3">
           <label className="label">
+            <span className="label-text"> Division</span>
+          </label>
+          <input
+            type="text"
+            onChange={handleDivisionInput}
+            value={division}
+            placeholder="Type here"
+            className="input input-bordered input-primary w-full       "
+            required={true}
+          />
+        </div>
+
+        {/* <div className="form-control mb-3">
+          <label className="label">
             <span className="label-text"> Map Link</span>
           </label>
           <input
@@ -123,9 +123,9 @@ export default function CreateBranchPage() {
             className="input input-bordered input-primary w-full       "
             required={true}
           />
-        </div>
+        </div> */}
 
-        <div className="form-control mb-3">
+        {/* <div className="form-control mb-3">
           <label className="label">
             <span className="label-text"> Code</span>
           </label>
@@ -137,7 +137,7 @@ export default function CreateBranchPage() {
             className="input input-bordered input-primary w-full       "
             required={true}
           />
-        </div>
+        </div> */}
 
         <div className="form-control mb-3">
           <div className="grid grid-cols-2 gap-2">
@@ -181,3 +181,4 @@ export default function CreateBranchPage() {
 CreateBranchPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+

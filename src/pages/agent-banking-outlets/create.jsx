@@ -82,20 +82,6 @@ export default function CreateAgentPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Division</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleDivisionInput}
-            value={division}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
             <span className="label-text">Address</span>
           </label>
           <input
@@ -110,26 +96,12 @@ export default function CreateAgentPage() {
 
         <div className="form-control mb-3">
           <label className="label">
-            <span className="label-text">Map Link</span>
+            <span className="label-text">Division</span>
           </label>
           <input
             type="text"
-            onChange={handleMapLinkInput}
-            value={mapLink}
-            placeholder="Type here"
-            className="input input-bordered input-primary w-full       "
-            required={true}
-          />
-        </div>
-
-        <div className="form-control mb-3">
-          <label className="label">
-            <span className="label-text">Code</span>
-          </label>
-          <input
-            type="text"
-            onChange={handleCodeInput}
-            value={code}
+            onChange={handleDivisionInput}
+            value={division}
             placeholder="Type here"
             className="input input-bordered input-primary w-full       "
             required={true}
@@ -178,3 +150,4 @@ export default function CreateAgentPage() {
 CreateAgentPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+

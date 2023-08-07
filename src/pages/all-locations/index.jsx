@@ -23,61 +23,57 @@ const AllLocationPage = () => {
     ...agentOutlets,
     ...ebl365Booths,
   ];
-  console.log(combinedData);
-
-  let type = null;
-  let name, division, address, mapLink;
-
-  if (type === "eblBranch") {
-    name = eblBranch?.branchName;
-    division = eblBranch?.branchDivision;
-    address = eblBranch?.branchAddress;
-    mapLink = eblBranch?.branchMapLink;
-  } else if (type === "eblSubBranch") {
-    name = eblSubBranch?.subBranchName;
-    division = eblSubBranch?.subBranchDivision;
-    address = eblSubBranch?.subBranchAddress;
-    mapLink = eblSubBranch?.subBranchMapLink;
-  } else if (type === "eblAgent") {
-    name = eblAgent?.agentName;
-    division = eblAgent?.agentDivision;
-    address = eblAgent?.agentAddress;
-    mapLink = eblAgent?.agentMapLink;
-  } else if (type === "ebl365booths") {
-    name = ebl365booths?.boothName;
-    division = ebl365booths?.boothDivision;
-    address = ebl365booths?.boothAddress;
-    mapLink = ebl365booths?.boothMapLink;
-  } else {
-    name = "";
-    division = "";
-    address = "";
-    mapLink = "";
-  }
 
   return (
     <section className="min-h-screen">
-      <div className="mr-6">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-x-auto my-10 shadow-xl rounded-xl">
-          <table className="table">
+          <table className="table-auto w-full">
             <thead>
-              <tr>
-                <th className="">Sl</th>
-                <th className="">Name</th>
-                <th className="">District</th>
-                <th className="">Address</th>
-                <th className="">Map</th>
+              <tr className="bg-gray-100">
+                <th className="py-2 px-4 text-left">Sl</th>
+                <th className="py-2 px-4 text-left">Name</th>
+                <th className="py-2 px-4 text-left">District</th>
+                <th className="py-2 px-4 text-left">Address</th>
+                <th className="py-2 px-4 text-left">Map</th>
               </tr>
             </thead>
             <tbody>
               {combinedData.map((item, index) => (
-                <tr key={index}>
-                  <td className="">{index + 1}</td>
-                  <td className="">{item.name}</td>
-                  <td className="">{item.district}</td>
-                  <td className="">{item.address}</td>
-                  <td className="">
-                    <a href={item.mapLink} target="_blank" rel="noreferrer">
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                >
+                  <td className="py-2 px-4">{index + 1}</td>
+                  <td className="py-2 px-4">
+                    {item.branchName ||
+                      item.subBranchName ||
+                      item.agentName ||
+                      item.ebl365Name}
+                  </td>
+                  <td className="py-2 px-4">
+                    {item.branchDivision ||
+                      item.subBranchDivision ||
+                      item.agentDivision ||
+                      item.ebl365Division}
+                  </td>
+                  <td className="py-2 px-4">
+                    {item.branchAddress ||
+                      item.subBranchAddress ||
+                      item.agentAddress ||
+                      item.ebl365Address}
+                  </td>
+                  <td className="py-2 px-4">
+                    <a
+                      href={
+                        item.branchMapLink ||
+                        item.subBranchMapLink ||
+                        item.agentMapLink ||
+                        item.ebl365MapLink
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <button className="btn btn-primary">Map</button>
                     </a>
                   </td>
@@ -91,8 +87,9 @@ const AllLocationPage = () => {
   );
 };
 
-export default AllLocationPage;
-
 AllLocationPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export default AllLocationPage;
+
