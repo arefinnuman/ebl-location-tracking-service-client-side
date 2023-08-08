@@ -5,7 +5,6 @@ import { useState } from "react";
 const BranchesPage = () => {
   const { data, isLoading } = useGet365BoothsQuery();
   const ebl365booths = data?.data;
-  console.log(ebl365booths);
 
   const boothDivisions = ebl365booths?.map((booth) => booth.ebl365Division);
   const uniqueBranchDivisions = [...new Set(boothDivisions)];
@@ -149,3 +148,4 @@ BranchesPage.getLayout = function getLayout(page) {
 };
 
 export default BranchesPage;
+

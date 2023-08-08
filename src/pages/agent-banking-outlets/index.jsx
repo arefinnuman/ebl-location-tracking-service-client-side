@@ -5,7 +5,6 @@ import { useState } from "react";
 const BranchesPage = () => {
   const { data, isLoading } = useGetAgentOutletsQuery();
   const agentOutlets = data?.data;
-  console.log(agentOutlets);
 
   const agentDivisions = agentOutlets?.map((agent) => agent.agentDivision);
   const uniqueAgentDivisions = [...new Set(agentDivisions)];
@@ -128,3 +127,4 @@ BranchesPage.getLayout = function getLayout(page) {
 };
 
 export default BranchesPage;
+

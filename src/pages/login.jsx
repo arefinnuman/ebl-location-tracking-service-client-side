@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,42 +11,42 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
       id: id,
       password: password,
     };
 
-    (async () => {
-      try {
-        const rawResponse = await fetch(
-          "http://localhost:5555/api/v1/auth/login",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          }
-        );
-        const content = await rawResponse.json();
-
-        if (content?.data?.accessToken) {
-          localStorage.setItem("token", content?.data?.accessToken);
-          toast.success("Login Successful");
-          router.push("/");
-        } else if (content?.success === false) {
-          toast.error(content?.message);
-        } else {
-          toast.error("Login Failed !");
+    try {
+      const rawResponse = await fetch(
+        "http://localhost:5555/api/v1/auth/login",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
         }
-      } catch (err) {
-        console.log(err);
+      );
+      const content = await rawResponse.json();
+
+      if (content?.data?.accessToken) {
+        localStorage.setItem("token", content?.data?.accessToken);
+
+        const decodedToken = jwtDecode(content.data.accessToken);
+
+        toast.success("Login Successful");
+        router.push("/");
+      } else if (content?.success === false) {
+        toast.error(content?.message);
+      } else {
         toast.error("Login Failed !");
       }
-    })();
+    } catch (err) {
+      toast.error("Login Failed !");
+    }
 
     setId("");
     setPassword("");
@@ -116,3 +117,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

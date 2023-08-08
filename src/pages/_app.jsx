@@ -1,5 +1,6 @@
 import store from "@/redux/store";
 import "@/styles/globals.css";
+import { LoadScript } from "@react-google-maps/api";
 import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
@@ -21,10 +22,13 @@ export default function App({ Component, pageProps }) {
       </Head>
       <div className={poppins.className}>
         <Provider store={store}>
-          {getLayout(<Component {...pageProps} />)}
+          <LoadScript googleMapsApiKey="your api key">
+            {getLayout(<Component {...pageProps} />)}
+          </LoadScript>
           <Toaster />
         </Provider>
       </div>
     </>
   );
 }
+

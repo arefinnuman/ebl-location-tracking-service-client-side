@@ -6,7 +6,6 @@ import { BiEdit } from "react-icons/bi";
 const AllUserPage = () => {
   const { data, isLoading } = useGetAllUserQuery();
   const users = data?.data;
-  console.log(users);
 
   return (
     <>
@@ -114,3 +113,4 @@ export default AllUserPage;
 AllUserPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+

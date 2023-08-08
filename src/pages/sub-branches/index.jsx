@@ -5,7 +5,6 @@ import { useState } from "react";
 const BranchesPage = () => {
   const { data, isLoading } = useGetSubBranchesQuery();
   const subBranches = data?.data;
-  console.log(subBranches);
 
   const branchDivisions = subBranches?.map(
     (branch) => branch.subBranchDivision
@@ -135,3 +134,4 @@ BranchesPage.getLayout = function getLayout(page) {
 };
 
 export default BranchesPage;
+

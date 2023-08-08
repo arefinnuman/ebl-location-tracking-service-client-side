@@ -1,16 +1,17 @@
-import Link from "next/link";
-
-const AllLocationTable = ({ network }) => {
-  const type = network?.type;
-  let name, division, address, mapLink;
-
-  import RootLayout from "@/components/layout/RootLayout";
+import RootLayout from "@/components/layout/RootLayout";
 import {
   useGet365BoothsQuery,
   useGetAgentOutletsQuery,
   useGetBranchesQuery,
   useGetSubBranchesQuery,
 } from "@/redux/api/api";
+import Link from "next/link";
+
+const AllLocationTable = ({ network }) => {
+  const type = network?.type;
+  let name, division, address, mapLink;
+
+
 
 const AllLocationPage = () => {
   const { data: branchesData } = useGetBranchesQuery();

@@ -8,7 +8,6 @@ const BranchesPage = () => {
   const branches = data?.data;
 
   const branchLocations = branches?.map((branch) => branch?.branchLocation);
-  console.log(branchLocations);
 
   const branchDivisions = branches?.map((branch) => branch.branchDivision);
   const uniqueBranchDivisions = [...new Set(branchDivisions)];
@@ -115,7 +114,7 @@ const BranchesPage = () => {
 
                 <div className="modal-action">
                   <button
-                    className="btn"
+                    className="btn btn-sm btn-outline"
                     onClick={() => setSelectedBranch(null)}
                   >
                     Close
@@ -135,3 +134,4 @@ BranchesPage.getLayout = function getLayout(page) {
 };
 
 export default BranchesPage;
+
