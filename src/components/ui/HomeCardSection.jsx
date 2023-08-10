@@ -41,7 +41,7 @@ const HomeCardSection = () => {
     <>
       <div className="mt-16 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
         {cardData?.map((card) => (
-          <HomeCardDetails key={card._id} card={card} />
+          <HomeCardDetails key={card.id} card={card} />
         ))}
       </div>
     </>

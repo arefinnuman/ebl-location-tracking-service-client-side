@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <div className={poppins.className}>
         <Provider store={store}>
-          <LoadScript googleMapsApiKey="your api key">
+          <LoadScript googleMapsApiKey="Your_api_Key">
             {getLayout(<Component {...pageProps} />)}
           </LoadScript>
           <Toaster />

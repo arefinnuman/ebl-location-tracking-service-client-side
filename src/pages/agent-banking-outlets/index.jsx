@@ -31,7 +31,10 @@ const BranchesPage = () => {
     <>
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen">
-          <span className="loading loading-infinity loading-lg"></span>
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
         </div>
       ) : (
         <>
