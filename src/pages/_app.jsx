@@ -11,6 +11,19 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
+const CustomLoadingElement = () => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    }}
+  >
+    <span className="loading loading-bars loading-lg"></span>
+  </div>
+);
+
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
 
@@ -22,9 +35,15 @@ export default function App({ Component, pageProps }) {
       </Head>
       <div className={poppins.className}>
         <Provider store={store}>
-          <LoadScript googleMapsApiKey="Your_api_Key">
-            {getLayout(<Component {...pageProps} />)}
-          </LoadScript>
+          {getLayout(
+            <LoadScript
+              googleMapsApiKey="your api key"
+              loadingElement={<CustomLoadingElement />}
+            >
+              <Component {...pageProps} />
+            </LoadScript>
+          )}
+
           <Toaster />
         </Provider>
       </div>
