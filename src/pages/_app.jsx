@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }) {
         <Provider store={store}>
           {getLayout(
             <LoadScript
-              googleMapsApiKey="Your_Api_Key"
+              googleMapsApiKey="Your API Key"
               loadingElement={<CustomLoadingElement />}
             >
               <Component {...pageProps} />

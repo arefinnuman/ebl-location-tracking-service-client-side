@@ -1,16 +1,56 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 import Footer from "./Footer";
 
 const DashboardLayout = ({ children }) => {
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const navBarItems = (
+    <>
+      <li>
+        <Link
+          href="/all-locations"
+          className="relative inline-flex items-center py-2 px-4 rounded-md text-white font-medium transition duration-300 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary mr-2"
+        >
+          <FaMapMarkerAlt className="mr-2" /> EBL Locations
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/dashboard"
+          className="flex items-center px-3 py-2 text-primary hover:text-white hover:bg-primary hover:border-primary border rounded-md transition duration-300 mr-2"
+        >
+          <FaChartBar className="text-xl mr-2" />
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={handleLogOut}
+          className="flex items-center px-3 py-2 text-gray-700 hover:text-primary hover:bg-secondary hover:border-primary border rounded-md transition duration-300 "
+        >
+          <FaSignOutAlt className="text-primary mr-2" />
+          Logout
+        </button>
+      </li>
+    </>
+  );
+
+  const mobileNavBarItems = (
     <>
       <li>
         <Link href="/all-locations">EBL Locations</Link>
       </li>
       <li>
-        <Link href="/about">About Us</Link>
+        <Link href="/dashboard">Dashboard</Link>
+      </li>
+      <li>
+        <button onClick={handleLogOut}>Logout</button>
       </li>
     </>
   );
@@ -41,64 +81,58 @@ const DashboardLayout = ({ children }) => {
     </>
   );
 
- 
-
   return (
     <>
-      <>
-        <div className="navbar bg-base-100 flex justify-between items-center">
-          <div className="navbar-start">
-            <div className="dropdown">
-              <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />
-                </svg>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+      <div className="navbar bg-base-100 flex flex-col md:flex-row justify-between items-center py-2 px-4 md:px-8 lg:px-16">
+        <div className="navbar-start flex items-center">
+          <div className="dropdown md:hidden">
+            <label tabIndex={0} className="btn btn-ghost">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                {navBarItems}
-              </ul>
-            </div>
-            <div className="flex justify-between items-center">
-              <Link href="/" className="flex items-center">
-                {" "}
-                <Image
-                  width={300}
-                  height={500}
-                  src={easternBankImage}
-                  alt="logo"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
                 />
-              </Link>
-            </div>
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              {mobileNavBarItems}
+            </ul>
           </div>
           <label
             htmlFor="my-drawer-2"
-            className="btn btn-primary btn-sm btn-outline lg:hidden"
+            className="flex items-center px-3 py-2 text-primary hover:text-white hover:bg-primary hover:border-primary border rounded-md transition duration-300 lg:hidden"
           >
-            DashBoard
+            <FaChartBar className="text-xl mr-2" />
+            Menu
           </label>
-
-          <div className="navbar-end hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{navBarItems}</ul>
-            <li className="btn btn-primary btn-sm btn-outline">
-              <Link href="/dashboard">Dashboard</Link>
-            </li>
+          <div className="flex justify-center items-center md:justify-start">
+            <Link href="/" className="flex justify-center items-center">
+              <Image
+                width={250}
+                height={160}
+                src={easternBankImage}
+                alt="logo"
+              />
+            </Link>
           </div>
         </div>
-      </>
+        <div className="navbar-end hidden md:flex items-center mt-4 md:mt-0">
+          <ul className="menu menu-horizontal space-x-4 md:mr-8">
+            {navBarItems}
+          </ul>
+        </div>
+      </div>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">{children}</div>
