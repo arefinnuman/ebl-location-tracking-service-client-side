@@ -1,5 +1,6 @@
 import { useGet365BoothsQuery } from "@/redux/api/api";
 import { useState } from "react";
+import Ebl365Modal from "../MapModal/Ebl365Modal";
 
 const Ebl365Table = () => {
   const { data, isLoading } = useGet365BoothsQuery();
@@ -46,7 +47,7 @@ const Ebl365Table = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen mr-20">
           <span className="loading loading-ring loading-xs"></span>
           <span className="loading loading-ring loading-sm"></span>
           <span className="loading loading-ring loading-md"></span>
@@ -105,7 +106,7 @@ const Ebl365Table = () => {
                         <td className="px-4 py-3 border md:w-1/2">
                           {ebl365.ebl365Address}
                         </td>
-                        <td className="px-4 py-3 border md:w-1/2">
+                        <td className="px-4 py-3 border md:w-1/6">
                           {ebl365.deviceAvailability}
                         </td>
                         <td className="px-4 py-3 border">
@@ -130,7 +131,7 @@ const Ebl365Table = () => {
                 open
               >
                 <form method="dialog" className="modal-box">
-                  <h1>Hello</h1>
+                  <Ebl365Modal selectedBooth={selectedBooth} />
                   <div className="modal-action">
                     <button
                       className="btn"

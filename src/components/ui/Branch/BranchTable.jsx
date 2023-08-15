@@ -1,6 +1,6 @@
-import MapModal from "@/components/ui/mapComponenet";
 import { useGetBranchesQuery } from "@/redux/api/api";
 import { useState } from "react";
+import BranchModal from "../MapModal/BranchModal";
 
 const BranchesUiComponent = () => {
   const { data, isLoading } = useGetBranchesQuery();
@@ -34,10 +34,10 @@ const BranchesUiComponent = () => {
     <section>
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen mr-20">
-    <span className="loading loading-ring loading-xs"></span>
-<span className="loading loading-ring loading-sm"></span>
-<span className="loading loading-ring loading-md"></span>
-<span className="loading loading-ring loading-lg"></span>
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
         </div>
       ) : (
         <>
@@ -114,7 +114,7 @@ const BranchesUiComponent = () => {
                   open
                 >
                   <form method="dialog" className="modal-box">
-                    <MapModal selectedBranch={selectedBranch} />
+                    <BranchModal selectedBranch={selectedBranch} />
 
                     <div className="modal-action">
                       <button

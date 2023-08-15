@@ -1,5 +1,6 @@
 import { useGetAgentOutletsQuery } from "@/redux/api/api";
 import { useState } from "react";
+import AgentModal from "../MapModal/AgentModal";
 
 const AgentOutletTable = () => {
   const { data, isLoading } = useGetAgentOutletsQuery();
@@ -107,7 +108,7 @@ const AgentOutletTable = () => {
                 open
               >
                 <form method="dialog" className="modal-box">
-                  <h1>{selectedAgent.agentLocation.lat}</h1>
+                  <AgentModal selectedAgent={selectedAgent} />
                   <div className="modal-action">
                     <button
                       className="btn"

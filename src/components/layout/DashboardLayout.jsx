@@ -7,7 +7,7 @@ const DashboardLayout = ({ children }) => {
   const navBarItems = (
     <>
       <li>
-        <Link href="/all-locations">Locations</Link>
+        <Link href="/all-locations">EBL Locations</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
@@ -41,6 +41,8 @@ const DashboardLayout = ({ children }) => {
     </>
   );
 
+ 
+
   return (
     <>
       <>
@@ -73,7 +75,6 @@ const DashboardLayout = ({ children }) => {
             <div className="flex justify-between items-center">
               <Link href="/" className="flex items-center">
                 {" "}
-                {/* Removed unnecessary justify-between */}
                 <Image
                   width={300}
                   height={500}
@@ -85,9 +86,9 @@ const DashboardLayout = ({ children }) => {
           </div>
           <label
             htmlFor="my-drawer-2"
-            className="btn btn-primary btn-sm btn-outline lg:hidden" // Removed unnecessary drawer-button class
+            className="btn btn-primary btn-sm btn-outline lg:hidden"
           >
-            Open drawer
+            DashBoard
           </label>
 
           <div className="navbar-end hidden lg:flex">
@@ -114,3 +115,4 @@ const DashboardLayout = ({ children }) => {
 };
 
 export default DashboardLayout;
+

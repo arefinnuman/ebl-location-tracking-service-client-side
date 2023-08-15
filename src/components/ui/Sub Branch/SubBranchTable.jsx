@@ -1,6 +1,7 @@
 import RootLayout from "@/components/layout/RootLayout";
 import { useGetSubBranchesQuery } from "@/redux/api/api";
 import { useState } from "react";
+import SubBranchModal from "../MapModal/SubBranchModal";
 
 const SubBranchTable = () => {
   const { data, isLoading } = useGetSubBranchesQuery();
@@ -116,7 +117,7 @@ const SubBranchTable = () => {
               open
             >
               <form method="dialog" className="modal-box">
-                <h1>{selectedBranch.subBranchLocation.lat}</h1>
+                <SubBranchModal selectedBranch={selectedBranch} />
                 <div className="modal-action">
                   <button
                     className="btn"

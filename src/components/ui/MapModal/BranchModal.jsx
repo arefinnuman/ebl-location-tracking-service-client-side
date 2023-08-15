@@ -1,6 +1,6 @@
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 
-const MapModal = ({ selectedBranch }) => {
+const BranchModal = ({ selectedBranch }) => {
   const center = {
     lat: selectedBranch?.branchLocation?.lat,
     lng: selectedBranch.branchLocation?.long,
@@ -23,5 +23,5 @@ const MapModal = ({ selectedBranch }) => {
   );
 };
 
-export default MapModal;
+export default BranchModal;
 

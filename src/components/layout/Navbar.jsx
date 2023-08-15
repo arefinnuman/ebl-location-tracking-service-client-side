@@ -6,13 +6,18 @@ const Navbar = () => {
   const navBarItems = (
     <>
       <li>
-        <Link href="/all-locations">Locations</Link>
+        <Link href="/all-locations">EBL Locations</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
       </li>
     </>
   );
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   return (
     <div className="navbar bg-base-100 flex justify-between items-center">
@@ -50,15 +55,28 @@ const Navbar = () => {
       <li className="btn btn-primary btn-sm btn-outline lg:hidden">
         <Link href="/dashboard">Dashboard</Link>
       </li>
+      <button
+        onClick={handleLogOut}
+        className="btn btn-sm btn-secondary ml-2 lg:hidden"
+      >
+        Logout
+      </button>
 
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navBarItems}</ul>
         <li className="btn btn-primary btn-sm btn-outline">
           <Link href="/dashboard">Dashboard</Link>
         </li>
+        <button
+          onClick={handleLogOut}
+          className="btn btn-sm btn-secondary ml-2 hover:bg-error"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
 };
 
 export default Navbar;
+
