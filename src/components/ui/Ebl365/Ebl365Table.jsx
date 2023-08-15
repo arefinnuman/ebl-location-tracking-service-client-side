@@ -6,6 +6,8 @@ const Ebl365Table = () => {
   const { data, isLoading } = useGet365BoothsQuery();
   const ebl365booths = data?.data;
 
+  const numberOfBooths = ebl365booths?.length;
+
   const boothDivisions = ebl365booths?.map((booth) => booth.ebl365Division);
   const uniqueBranchDivisions = [...new Set(boothDivisions)];
 
@@ -56,6 +58,14 @@ const Ebl365Table = () => {
       ) : (
         <>
           <div>
+            <h1 className="text-2xl font-bold text-center my-2">
+              {" "}
+              Available{" "}
+              <span className="font-extrabold text-primary">
+                365 Booths: {numberOfBooths}{" "}
+              </span>
+            </h1>
+
             <div className="flex flex-col md:flex-row justify-center items-center mb-6">
               <input
                 type="text"
@@ -87,7 +97,7 @@ const Ebl365Table = () => {
                       <th className="px-4 py-3 border">Name</th>
                       <th className="px-4 py-3 border">District</th>
                       <th className="px-4 py-3 border">Address</th>
-                      <th className="px-4 py-3 border">Device Availability</th>
+                      <th className="px-4 py-3 border">Device</th>
                       <th className="px-4 py-3 border">Location</th>
                     </tr>
                   </thead>

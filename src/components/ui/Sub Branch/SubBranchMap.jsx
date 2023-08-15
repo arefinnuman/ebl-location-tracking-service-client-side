@@ -43,7 +43,7 @@ const SubBranchMap = () => {
     <div>
       <div>
         <GoogleMap
-          mapContainerStyle={{ width: "80vh", height: "90vh" }}
+          mapContainerStyle={{ width: "100%", height: "90vh" }}
           center={center}
           zoom={7}
           options={mapOptions}

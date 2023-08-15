@@ -6,8 +6,12 @@ const AgentOutletTable = () => {
   const { data, isLoading } = useGetAgentOutletsQuery();
   const agentOutlets = data?.data;
 
+  const numberOfAgents = agentOutlets?.length;
+
   const agentDivisions = agentOutlets?.map((agent) => agent.agentDivision);
-  const uniqueAgentDivisions = [...new Set(agentDivisions)];
+  const uniqueAgentDivisions = [
+    ...new Set(agentDivisions?.map((item) => item.trim().toLowerCase())),
+  ];
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
@@ -23,7 +27,8 @@ const AgentOutletTable = () => {
             agent.agentAddress
               .toLowerCase()
               .includes(searchInput.toLowerCase())) &&
-          (selectedDivision === "" || agent.agentDivision === selectedDivision)
+          (selectedDivision === "" ||
+            agent.agentDivision.toLowerCase() === selectedDivision)
       )
     : [];
 
@@ -39,6 +44,13 @@ const AgentOutletTable = () => {
       ) : (
         <>
           <div>
+            <h1 className="text-2xl font-bold text-center my-2">
+              {" "}
+              Available{" "}
+              <span className="font-extrabold text-primary">
+                Agent Outlets: {numberOfAgents}
+              </span>
+            </h1>
             <div className="flex flex-col md:flex-row justify-center items-center mb-6">
               <input
                 type="text"
@@ -52,10 +64,10 @@ const AgentOutletTable = () => {
                 value={selectedDivision}
                 onChange={(e) => setSelectedDivision(e.target.value)}
               >
-                <option value="">All Districts</option>
+                <option value="">Select District</option>
                 {uniqueAgentDivisions.map((division) => (
                   <option key={division} value={division}>
-                    {division}
+                    {division?.charAt(0).toUpperCase() + division?.slice(1)}
                   </option>
                 ))}
               </select>

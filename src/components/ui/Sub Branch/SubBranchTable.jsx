@@ -1,20 +1,25 @@
 import RootLayout from "@/components/layout/RootLayout";
 import { useGetSubBranchesQuery } from "@/redux/api/api";
 import { useState } from "react";
+import { FaEye } from "react-icons/fa";
 import SubBranchModal from "../MapModal/SubBranchModal";
 
 const SubBranchTable = () => {
   const { data, isLoading } = useGetSubBranchesQuery();
   const subBranches = data?.data;
 
+  const numberOfSubBranches = subBranches?.length;
+
   const branchDivisions = subBranches?.map(
     (branch) => branch.subBranchDivision
   );
-  const uniqueBranchDivisions = [...new Set(branchDivisions)];
+  const uniqueBranchDivisions = [
+    ...new Set(branchDivisions?.map((item) => item.trim().toLowerCase())),
+  ];
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedBranch, setSelectedBranch] = useState(null);
+  const [selectedSubBranch, setSelectedSubBranch] = useState(null);
 
   const filteredSubBranches = subBranches
     ? subBranches.filter(
@@ -29,7 +34,7 @@ const SubBranchTable = () => {
               .toLowerCase()
               .includes(searchInput.toLowerCase())) &&
           (selectedDivision === "" ||
-            subBranch.subBranchDivision === selectedDivision)
+            subBranch.subBranchDivision.toLowerCase() === selectedDivision)
       )
     : [];
 
@@ -45,6 +50,13 @@ const SubBranchTable = () => {
       ) : (
         <>
           <div>
+            <h1 className="text-2xl font-bold text-center my-2">
+              {" "}
+              Available{" "}
+              <span className="font-extrabold text-primary">
+                Sub Branches: {numberOfSubBranches}
+              </span>{" "}
+            </h1>
             <div className="flex flex-col md:flex-row justify-center items-center mb-6">
               <input
                 type="text"
@@ -58,10 +70,10 @@ const SubBranchTable = () => {
                 value={selectedDivision}
                 onChange={(e) => setSelectedDivision(e.target.value)}
               >
-                <option value="">All Districts</option>
+                <option value="">Select District</option>
                 {uniqueBranchDivisions.map((division) => (
                   <option key={division} value={division}>
-                    {division}
+                    {division?.charAt(0).toUpperCase() + division?.slice(1)}
                   </option>
                 ))}
               </select>
@@ -86,7 +98,7 @@ const SubBranchTable = () => {
                           {index + 1}
                         </td>
                         <td className="px-4 py-3 border">
-                          {subBranch.subBranchName}
+                          {subBranch.subBranchName} Sub Branch
                         </td>
                         <td className="px-4 py-3 border">
                           {subBranch.subBranchDivision}
@@ -96,9 +108,10 @@ const SubBranchTable = () => {
                         </td>
                         <td className="px-4 py-3 border">
                           <button
-                            className="btn btn-primary btn-sm btn-outline btn-ghost"
-                            onClick={() => setSelectedBranch(subBranch)}
+                            className="flex items-center px-3 py-1.5 border text-black border-primary rounded-full shadow hover:bg-primary hover:border-primary transition duration-300 hover:text-white"
+                            onClick={() => setSelectedSubBranch(subBranch)}
                           >
+                            <FaEye className="mr-2" />
                             View
                           </button>
                         </td>
@@ -110,18 +123,18 @@ const SubBranchTable = () => {
             </div>
           </div>
 
-          {selectedBranch && (
+          {selectedSubBranch && (
             <dialog
               id="my_modal_5"
               className="modal modal-bottom sm:modal-middle"
               open
             >
               <form method="dialog" className="modal-box">
-                <SubBranchModal selectedBranch={selectedBranch} />
+                <SubBranchModal selectedSubBranch={selectedSubBranch} />
                 <div className="modal-action">
                   <button
                     className="btn"
-                    onClick={() => setSelectedBranch(null)}
+                    onClick={() => setSelectedSubBranch(null)}
                   >
                     Close
                   </button>

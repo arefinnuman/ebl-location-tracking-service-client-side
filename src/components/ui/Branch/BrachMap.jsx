@@ -37,37 +37,35 @@ const BranchMapComponent = () => {
 
   return (
     <div>
-      <div>
-        <GoogleMap
-          mapContainerStyle={{ width: "80vh", height: "90vh" }}
-          center={center}
-          zoom={7}
-          options={mapOptions}
-        >
-          {branchLocations &&
-            branchLocations.map((location, index) => (
-              <Marker
-                key={index}
-                position={{ lat: location.lat, lng: location.lng }}
-                onClick={() => setSelectedMarkerIndex(index)} // Changed to onClick event
-              >
-                {selectedMarkerIndex === index && (
-                  <InfoWindow
-                    onCloseClick={() => setSelectedMarkerIndex(null)}
-                    position={{ lat: location.lat, lng: location.lng }}
-                  >
-                    <div>
-                      <p className="text-lg font-semibold">
-                        {branchNames[index]}
-                      </p>
-                      <p>{branchAddresses[index]}</p>
-                    </div>
-                  </InfoWindow>
-                )}
-              </Marker>
-            ))}
-        </GoogleMap>
-      </div>
+      <GoogleMap
+        mapContainerStyle={{ width: "100%", height: "90vh" }}
+        center={center}
+        zoom={7}
+        options={mapOptions}
+      >
+        {branchLocations &&
+          branchLocations.map((location, index) => (
+            <Marker
+              key={index}
+              position={{ lat: location.lat, lng: location.lng }}
+              onClick={() => setSelectedMarkerIndex(index)}
+            >
+              {selectedMarkerIndex === index && (
+                <InfoWindow
+                  onCloseClick={() => setSelectedMarkerIndex(null)}
+                  position={{ lat: location.lat, lng: location.lng }}
+                >
+                  <div>
+                    <p className="text-lg font-semibold">
+                      {branchNames[index]}
+                    </p>
+                    <p>{branchAddresses[index]}</p>
+                  </div>
+                </InfoWindow>
+              )}
+            </Marker>
+          ))}
+      </GoogleMap>
     </div>
   );
 };

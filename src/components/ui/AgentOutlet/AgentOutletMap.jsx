@@ -18,12 +18,8 @@ const AgentTableMap = () => {
     lng: agent?.agentLocation?.long,
   }));
 
-  const agentNames = agentOutletsData?.map(
-    (agent) => agent?.agentName
-  );
-  const agentAddresses = agentOutletsData?.map(
-    (agent) => agent?.agentAddress
-  );
+  const agentNames = agentOutletsData?.map((agent) => agent?.agentName);
+  const agentAddresses = agentOutletsData?.map((agent) => agent?.agentAddress);
 
   const center = {
     lat: (BangladeshBounds.north + BangladeshBounds.south) / 2,
@@ -43,7 +39,7 @@ const AgentTableMap = () => {
     <div>
       <div>
         <GoogleMap
-          mapContainerStyle={{ width: "80vh", height: "90vh" }}
+          mapContainerStyle={{ width: "100%", height: "90vh" }}
           center={center}
           zoom={7}
           options={mapOptions}

@@ -1,29 +1,65 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 
 const Navbar = () => {
-  const navBarItems = (
-    <>
-      <li>
-        <Link href="/all-locations">EBL Locations</Link>
-      </li>
-      <li>
-        <Link href="/about">About Us</Link>
-      </li>
-    </>
-  );
-
   const handleLogOut = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
 
+  const navBarItems = (
+    <>
+      <li>
+        <Link
+          href="/all-locations"
+          className="relative inline-flex items-center py-2 px-4 rounded-md text-white font-medium transition duration-300 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary"
+        >
+          <FaMapMarkerAlt className="mr-2" /> EBL Locations
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href="/dashboard"
+          className="flex items-center px-3 py-2 text-primary hover:text-white hover:bg-primary hover:border-primary border rounded-md transition duration-300"
+        >
+          <FaChartBar className="text-xl mr-2" />
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={handleLogOut}
+          className="flex items-center px-3 py-2 text-gray-700 hover:text-primary hover:bg-secondary hover:border-primary border rounded-md transition duration-300 ml-4"
+        >
+          <FaSignOutAlt className="text-primary mr-2" />
+          Logout
+        </button>
+      </li>
+    </>
+  );
+
+  const mobileNavBarItems = (
+    <>
+      <li>
+        <Link href="/all-locations">EBL Locations</Link>
+      </li>
+      <li>
+        <Link href="/dashboard">Dashboard</Link>
+      </li>
+      <li>
+        <button onClick={handleLogOut}>Logout</button>
+      </li>
+    </>
+  );
+
   return (
-    <div className="navbar bg-base-100 flex justify-between items-center">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+    <div className="navbar bg-base-100 flex flex-col md:flex-row justify-between items-center py-2 px-4 md:px-8 lg:px-16">
+      <div className="navbar-start flex items-center">
+        <div className="dropdown md:hidden">
+          <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -43,36 +79,20 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            {navBarItems}
+            {mobileNavBarItems}
           </ul>
         </div>
-        <div className="flex justify-around items-center">
-          <Link href="/" className="flex justify-between items-center">
-            <Image width={300} height={500} src={easternBankImage} alt="logo" />
+        <div className="flex justify-center items-center md:justify-start">
+          <Link href="/" className="flex justify-center items-center">
+            <Image width={250} height={160} src={easternBankImage} alt="logo" />
           </Link>
         </div>
       </div>
-      <li className="btn btn-primary btn-sm btn-outline lg:hidden">
-        <Link href="/dashboard">Dashboard</Link>
-      </li>
-      <button
-        onClick={handleLogOut}
-        className="btn btn-sm btn-secondary ml-2 lg:hidden"
-      >
-        Logout
-      </button>
 
-      <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navBarItems}</ul>
-        <li className="btn btn-primary btn-sm btn-outline">
-          <Link href="/dashboard">Dashboard</Link>
-        </li>
-        <button
-          onClick={handleLogOut}
-          className="btn btn-sm btn-secondary ml-2 hover:bg-error"
-        >
-          Logout
-        </button>
+      <div className="navbar-end hidden md:flex items-center mt-4 md:mt-0">
+        <ul className="menu menu-horizontal space-x-4 md:mr-8">
+          {navBarItems}
+        </ul>
       </div>
     </div>
   );

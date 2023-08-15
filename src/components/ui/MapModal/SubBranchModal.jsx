@@ -1,15 +1,15 @@
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 
-const SubBranchModal = ({ selectedBranch }) => {
+const SubBranchModal = ({ selectedSubBranch }) => {
   const center = {
-    lat: selectedBranch?.subBranchLocation?.lat,
-    lng: selectedBranch.subBranchLocation?.long,
+    lat: selectedSubBranch?.subBranchLocation?.lat,
+    lng: selectedSubBranch?.subBranchLocation?.long,
   };
 
   return (
     <div>
-      <h1 className="text-xl">{selectedBranch.subBranchName}</h1>
-      <p>{selectedBranch.subBranchAddress}</p>
+      <h1 className="text-xl">{selectedSubBranch?.subBranchName}</h1>
+      <p>{selectedSubBranch?.subBranchAddress}</p>
       <div>
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "60vh" }}

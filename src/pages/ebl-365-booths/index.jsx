@@ -1,12 +1,18 @@
 import RootLayout from "@/components/layout/RootLayout";
-import Ebl365Map from "@/components/ui/Ebl365/ebl365Map";
-import Ebl365Table from "@/components/ui/Ebl365/ebl365Table";
+import Ebl365Map from "@/components/ui/Ebl365/Ebl365Map";
+import Ebl365Table from "@/components/ui/Ebl365/Ebl365Table";
 
 const Ebl365Page = () => {
   return (
-    <section className="mx-auto justify-center flex w-full">
-      <Ebl365Table className="w-2/3" />
-      <Ebl365Map className="w-1/4" />
+    <section className="flex justify-center flex-col md:flex-row w-full">
+      <div className="w-full md:w-3/4">
+        <Ebl365Table />
+      </div>
+      <div className="w-full md:w-2/5 flex-shrink-0">
+        <div className="sticky top-4">
+          <Ebl365Map />
+        </div>
+      </div>
     </section>
   );
 };

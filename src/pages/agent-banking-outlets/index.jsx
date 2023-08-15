@@ -4,10 +4,19 @@ import AgentOutletTable from "@/components/ui/AgentOutlet/AgentOutletTable";
 
 const AgentOutletPage = () => {
   return (
-    <section className="mx-auto justify-center flex w-full">
-      <AgentOutletTable className="w-2/3" />
-      <AgentTableMap className="w-1/3" />
-    </section>
+    <>
+      <section className="flex justify-center flex-col md:flex-row w-full">
+        <div className="w-full md:w-3/5">
+          <AgentOutletTable />
+        </div>
+
+        <div className="w-full md:w-2/5 flex-shrink-0">
+          <div className="sticky top-4">
+            <AgentTableMap />
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

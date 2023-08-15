@@ -4,16 +4,22 @@ import SubBranchTable from "@/components/ui/Sub Branch/SubBranchTable";
 
 const SubBranchPage = () => {
   return (
-    <section className="mx-auto justify-center flex w-full">
-      <SubBranchTable className="w-2/3" />
-      <SubBranchMap className="w-1/3" />
+    <section className="flex justify-center flex-col md:flex-row w-full">
+      <div className="w-full md:w-3/5">
+        <SubBranchTable />
+      </div>
+      <div className="w-full md:w-2/5 flex-shrink-0">
+        <div className="sticky top-4">
+          <SubBranchMap />
+        </div>
+      </div>
     </section>
   );
 };
 
-export default SubBranchPage;
-
 SubBranchPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export default SubBranchPage;
 

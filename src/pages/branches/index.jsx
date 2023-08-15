@@ -1,13 +1,21 @@
 import RootLayout from "@/components/layout/RootLayout";
 import BranchMapComponent from "@/components/ui/Branch/BrachMap";
-import BranchesUiComponent from "@/components/ui/Branch/BranchTable";
+import BranchTable from "@/components/ui/Branch/BranchTable";
 
 const BranchesPage = () => {
   return (
-    <section className="mx-auto justify-center flex w-full">
-      <BranchesUiComponent className="w-1/3" />
-      <BranchMapComponent className="w-2/3" />
-    </section>
+    <>
+      <section className="flex justify-center flex-col md:flex-row w-full">
+        <div className="w-full md:w-3/4">
+          <BranchTable />
+        </div>
+        <div className="w-full md:w-2/5 m-2 flex-shrink-0">
+          <div className="sticky top-4">
+            <BranchMapComponent />
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
