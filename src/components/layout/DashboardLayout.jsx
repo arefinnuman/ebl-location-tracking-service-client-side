@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 import Footer from "./Footer";
 
 const DashboardLayout = ({ children }) => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
@@ -76,7 +84,16 @@ const DashboardLayout = ({ children }) => {
         <Link href="/users">View All users</Link>
       </li>
       <li>
-        <Link href="/dashboard-locations">View all Locations</Link>
+        <Link href="/dashboard-locations/branches">Branches</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/sub-branches">Sub Branches</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/agent-outlets">Agent Outlets</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/ebl-365">EBL 365 Booths</Link>
       </li>
     </>
   );

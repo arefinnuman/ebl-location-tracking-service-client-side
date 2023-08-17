@@ -10,6 +10,7 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getBranches: builder.query({
       query: () => "/ebl-branches",
+      invalidatesTags: ["eblbranches"],
     }),
 
     getSubBranches: builder.query({
@@ -134,3 +135,4 @@ export const {
   useDelete365OutletsMutation,
   useUpdateBranchMutation,
 } = apiSlice;
+

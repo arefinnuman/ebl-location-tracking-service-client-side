@@ -14,7 +14,7 @@ export default function CreateBranchPage() {
 
   const [createBranch] = usePostBranchMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const branchData = {
       branchName: name,
@@ -28,16 +28,19 @@ export default function CreateBranchPage() {
       },
     };
 
-    toast.success("Branch created successfully");
-
-    createBranch(branchData);
-    setName("");
-    setDivision("");
-    setAddress("");
-    setMapLink("");
-    setCode("");
-    setLat("");
-    setLong("");
+    const response = await createBranch(branchData);
+    if (response?.data?.statusCode == 201) {
+      toast.success("Branch created successfully");
+      setName("");
+      setDivision("");
+      setAddress("");
+      setMapLink("");
+      setCode("");
+      setLat("");
+      setLong("");
+    } else if (response?.error?.data?.success === false) {
+      toast.error("Please try again. and check your data");
+    }
   };
 
   const handleNameInput = (e) => {
@@ -153,3 +156,4 @@ export default function CreateBranchPage() {
 CreateBranchPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+
