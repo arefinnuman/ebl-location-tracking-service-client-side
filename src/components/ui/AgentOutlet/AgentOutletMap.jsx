@@ -1,6 +1,6 @@
 import { useGetAgentOutletsQuery } from "@/redux/api/api";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AgentTableMap = () => {
   const BangladeshBounds = {
@@ -11,7 +11,14 @@ const AgentTableMap = () => {
   };
 
   const { data: agentOutlets } = useGetAgentOutletsQuery();
-  const agentOutletsData = agentOutlets?.data;
+
+  const [agentOutletsData, setAgentOutletsData] = useState(null);
+
+  useEffect(() => {
+    if (agentOutlets) {
+      setAgentOutletsData(agentOutlets.data);
+    }
+  }, [agentOutlets]);
 
   const agentLocations = agentOutletsData?.map((agent) => ({
     lat: agent?.agentLocation?.lat,

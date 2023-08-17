@@ -1,41 +1,77 @@
+import jwtDecode from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 
 const Navbar = () => {
+  const [user, setUser] = useState(null);
+
+  const getUserFromToken = () => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          return decodedToken;
+        } catch (error) {
+          console.error("Error decoding token:", error);
+        }
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const user = getUserFromToken();
+    setUser(user);
+  }, []);
+
+  const fullName = [
+    user?.fullName?.firstName,
+    user?.fullName?.middleName,
+    user?.fullName?.lastName,
+  ]
+    .filter((namePart) => namePart)
+    .join(" ");
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
 
+  const userRole = user?.role;
+
   const navBarItems = (
     <>
-      <li>
+      <li className="py-2">
         <Link
           href="/all-locations"
-          className="relative inline-flex items-center py-2 px-4 rounded-md text-white font-medium transition duration-300 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary"
+          className="flex items-center px-3 py-2 rounded-md transition duration-300 hover:bg-primary hover:text-white"
         >
-          <FaMapMarkerAlt className="mr-2" /> EBL Locations
+          <FaMapMarkerAlt className="text-lg mr-2" />{" "}
+          <span className="text-base">EBL Locations</span>
         </Link>
       </li>
-
-      <li>
-        <Link
-          href="/dashboard"
-          className="flex items-center px-3 py-2 text-primary hover:text-white hover:bg-primary hover:border-primary border rounded-md transition duration-300"
-        >
-          <FaChartBar className="text-xl mr-2" />
-          Dashboard
-        </Link>
-      </li>
-      <li>
+      {userRole === "admin" && (
+        <li className="py-2">
+          <Link
+            href="/dashboard"
+            className="flex items-center px-3 py-2 rounded-md transition duration-300 hover:bg-primary hover:text-white"
+          >
+            <FaChartBar className="text-lg mr-2" />{" "}
+            <span className="text-base">Dashboard</span>
+          </Link>
+        </li>
+      )}
+      <li className="py-2">
         <button
           onClick={handleLogOut}
-          className="flex items-center px-3 py-2 text-gray-700 hover:text-primary hover:bg-secondary hover:border-primary border rounded-md transition duration-300 ml-4"
+          className="flex items-center px-3 py-2 text-gray-700 rounded-md transition duration-300 hover:text-primary hover:bg-secondary"
         >
-          <FaSignOutAlt className="text-primary mr-2" />
-          Logout
+          <FaSignOutAlt className="text-primary mr-2" />{" "}
+          <span className="text-base">Logout</span>
         </button>
       </li>
     </>
@@ -82,10 +118,15 @@ const Navbar = () => {
             {mobileNavBarItems}
           </ul>
         </div>
-        <div className="flex justify-center items-center md:justify-start">
+        <div className="flex justify-around items-center md:justify-start">
           <Link href="/" className="flex justify-center items-center">
             <Image width={250} height={160} src={easternBankImage} alt="logo" />
           </Link>
+          <div className="lg:pl-36 hidden lg:inline-block">
+            <span className="text-lg">
+              Hello <span className="text-primary">{fullName}</span>
+            </span>
+          </div>
         </div>
       </div>
 

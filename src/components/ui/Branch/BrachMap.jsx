@@ -1,6 +1,6 @@
 import { useGetBranchesQuery } from "@/redux/api/api";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const BranchMapComponent = () => {
   const BangladeshBounds = {
@@ -10,8 +10,15 @@ const BranchMapComponent = () => {
     east: 92.673,
   };
 
+  const [branchesData, setBranchesData] = useState(null);
+
   const { data: branches } = useGetBranchesQuery();
-  const branchesData = branches?.data;
+
+  useEffect(() => {
+    setBranchesData(branches?.data);
+  }, [branches]);
+
+  console.log(branchesData);
 
   const branchLocations = branchesData?.map((branch) => ({
     lat: branch?.branchLocation?.lat,

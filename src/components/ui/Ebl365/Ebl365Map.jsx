@@ -1,6 +1,6 @@
 import { useGet365BoothsQuery } from "@/redux/api/api";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Ebl365Map = () => {
   const BangladeshBounds = {
@@ -10,8 +10,14 @@ const Ebl365Map = () => {
     east: 92.673,
   };
 
+  const [ebl365BoothsData, setEbl365BoothsData] = useState([]);
   const { data: ebl365Booths } = useGet365BoothsQuery();
-  const ebl365BoothsData = ebl365Booths?.data;
+
+  useEffect(() => {
+    if (ebl365Booths) {
+      setEbl365BoothsData(ebl365Booths?.data);
+    }
+  }, [ebl365Booths]);
 
   const ebl365Locations = ebl365BoothsData?.map((ebl365) => ({
     lat: ebl365?.lat,

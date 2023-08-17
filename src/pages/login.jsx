@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -35,8 +34,6 @@ const LoginPage = () => {
       if (content?.data?.accessToken) {
         localStorage.setItem("token", content?.data?.accessToken);
 
-        const decodedToken = jwtDecode(content.data.accessToken);
-
         toast.success("Login Successful");
         router.push("/");
       } else if (content?.success === false) {
@@ -71,12 +68,15 @@ const LoginPage = () => {
           />
         </div>
         <div className="flex flex-col w-1/2 p-8">
-          <h2 className="text-3xl font-semibold leading-tight mb-4">
-            Welcome to Eastern Bank
-            <br />
-            <span>Location Tracking Service by</span>
-            <span> DFS</span>
-          </h2>
+          <div>
+            <h2 className="text-3xl lg:text-4xl font-semibold">
+              <span className="text-5xl">W</span>elcome to{" "}
+              <span className="text-primary">Digital Banking</span>
+            </h2>
+            <p className="text-base lg:text-lg text-gray-700 mb-2">
+              Location Tracking Service
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit}>
             <input

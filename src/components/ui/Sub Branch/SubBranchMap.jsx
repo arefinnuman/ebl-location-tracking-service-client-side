@@ -1,6 +1,6 @@
 import { useGetSubBranchesQuery } from "@/redux/api/api";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SubBranchMap = () => {
   const BangladeshBounds = {
@@ -11,7 +11,14 @@ const SubBranchMap = () => {
   };
 
   const { data: subBranches } = useGetSubBranchesQuery();
-  const subBranchesData = subBranches?.data;
+
+  const [subBranchesData, setSubBranchesData] = useState(null);
+
+  useEffect(() => {
+    if (subBranches) {
+      setSubBranchesData(subBranches.data);
+    }
+  }, [subBranches]);
 
   const subBranchLocations = subBranchesData?.map((subBranch) => ({
     lat: subBranch?.subBranchLocation?.lat,

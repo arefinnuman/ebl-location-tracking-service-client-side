@@ -5,7 +5,7 @@ import {
   useGetSubBranchesQuery,
 } from "@/redux/api/api";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FootPrintMap = () => {
   const BangladeshBounds = {
@@ -22,22 +22,27 @@ const FootPrintMap = () => {
     },
   };
 
+  const [combinedData, setCombinedData] = useState([]);
+
   const { data: branchesData } = useGetBranchesQuery();
   const { data: subBranchesData } = useGetSubBranchesQuery();
   const { data: agentOutletsData } = useGetAgentOutletsQuery();
   const { data: ebl365Data } = useGet365BoothsQuery();
 
-  const branches = branchesData?.data || [];
-  const subBranches = subBranchesData?.data || [];
-  const agentOutlets = agentOutletsData?.data || [];
-  const ebl365Booths = ebl365Data?.data || [];
+  useEffect(() => {
+    const branches = branchesData?.data || [];
+    const subBranches = subBranchesData?.data || [];
+    const agentOutlets = agentOutletsData?.data || [];
+    const ebl365Booths = ebl365Data?.data || [];
 
-  const combinedData = [
-    ...branches,
-    ...subBranches,
-    ...agentOutlets,
-    ...ebl365Booths,
-  ];
+    const combined = [
+      ...branches,
+      ...subBranches,
+      ...agentOutlets,
+      ...ebl365Booths,
+    ];
+    setCombinedData(combined);
+  }, [branchesData, subBranchesData, agentOutletsData, ebl365Data]);
 
   const uniqueDistricts = [];
   const districtMapping = {
@@ -58,8 +63,7 @@ const FootPrintMap = () => {
     }
   });
 
-  const districtLocations = {};
-
+  const districtLocations = [];
   combinedData.forEach((item) => {
     const district = (
       item.branchDivision ||
