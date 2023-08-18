@@ -1,13 +1,27 @@
-import { useGet365BoothsQuery } from "@/redux/api/api";
-import { useState } from "react";
+import {
+  useDelete365OutletsMutation,
+  useGet365BoothsQuery,
+} from "@/redux/api/api";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { AiFillDelete } from "react-icons/ai";
+import { FiEdit2 } from "react-icons/fi";
+import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import Ebl365Modal from "../MapModal/Ebl365Modal";
 
 const DashboardEbl365Table = () => {
-  const { data, isLoading } = useGet365BoothsQuery();
-  const ebl365booths = data?.data;
+  const [ebl365booths, setEbl365Booths] = useState();
+  const { data, isLoading, refetch } = useGet365BoothsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 9000,
+  });
+  useEffect(() => {
+    if (data) {
+      setEbl365Booths(data.data);
+    }
+  }, [data]);
 
   const numberOfBooths = ebl365booths?.length;
-
   const boothDivisions = ebl365booths?.map((booth) => booth.ebl365Division);
   const uniqueBranchDivisions = [...new Set(boothDivisions)];
 
@@ -45,6 +59,30 @@ const DashboardEbl365Table = () => {
         );
       })
     : [];
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [branchToDelete, setBranchToDelete] = useState(null);
+
+  const [delete365Outlet] = useDelete365OutletsMutation(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
+
+  const handleDelete365Booth = async () => {
+    try {
+      await delete365Outlet(branchToDelete);
+      toast.success("EBL 365 deleted successfully");
+      refetch();
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleDeleteButtonClick = (branchId) => {
+    setBranchToDelete(branchId);
+    setShowDeleteConfirmation(true);
+  };
 
   return (
     <>
@@ -88,7 +126,7 @@ const DashboardEbl365Table = () => {
               </select>
             </div>
 
-            <div className="w-full max-w-4xl px-6 mx-auto bg-white rounded-lg mb-6">
+            <div className="w-full max-w-6xl px-6 mx-auto bg-white rounded-lg mb-6">
               <div className="overflow-x-auto">
                 <table className="table w-full border-collapse">
                   <thead>
@@ -99,6 +137,8 @@ const DashboardEbl365Table = () => {
                       <th className="px-4 py-3 border">Address</th>
                       <th className="px-4 py-3 border">Device</th>
                       <th className="px-4 py-3 border">Location</th>
+                      <th className="px-4 py-3 border">Edit</th>
+                      <th className="px-4 py-3 border">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -127,6 +167,24 @@ const DashboardEbl365Table = () => {
                             View
                           </button>
                         </td>
+                        <td className="px-4 py-3 border">
+                          <button
+                            className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
+                            onClick={() => setSelectedBranch(branch)}
+                          >
+                            Edit
+                            <FiEdit2 className="ml-2" />
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border">
+                          <button
+                            className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-error hover:border-base transition duration-300 hover:text-white text-sm"
+                            onClick={() => handleDeleteButtonClick(ebl365._id)}
+                          >
+                            Del
+                            <AiFillDelete className="ml-1" />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -152,6 +210,16 @@ const DashboardEbl365Table = () => {
                   </div>
                 </form>
               </dialog>
+            )}
+
+            {showDeleteConfirmation && (
+              <DeleteConfirmationModal
+                onConfirm={() => {
+                  handleDelete365Booth(branchToDelete);
+                  setShowDeleteConfirmation(false);
+                }}
+                onCancel={() => setShowDeleteConfirmation(false)}
+              />
             )}
           </div>
         </>

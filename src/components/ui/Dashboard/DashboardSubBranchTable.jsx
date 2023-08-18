@@ -70,7 +70,7 @@ const DashboardSubBranchTable = () => {
       refetch();
       setShowDeleteConfirmation(false);
     } catch (error) {
-      console.log("Error", error);
+      toast.error(error.message);
     }
   };
 

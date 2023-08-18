@@ -225,6 +225,7 @@ const AllLocationPage = () => {
           </form>
         </dialog>
       )}
+
       {selectedItemType === "subBranch" && selectedItem && (
         <dialog
           id="my_modal_5"

@@ -29,7 +29,6 @@ export default function CreateBranchPage() {
     };
 
     const response = await createBranch(branchData);
-    console.log(response);
     if (response?.data?.statusCode == 201) {
       toast.success("Branch created successfully");
       setName("");
@@ -52,12 +51,6 @@ export default function CreateBranchPage() {
   };
   const handleAddressInput = (e) => {
     setAddress(e.target.value);
-  };
-  const handleMapLinkInput = (e) => {
-    setMapLink(e.target.value);
-  };
-  const handleCodeInput = (e) => {
-    setCode(e.target.value);
   };
   const handleLatInput = (e) => {
     setLat(e.target.value);
@@ -122,7 +115,7 @@ export default function CreateBranchPage() {
                 <span className="label-text">Latitude</span>
               </label>
               <input
-                type="text"
+                type="number"
                 onChange={handleLatInput}
                 value={lat}
                 placeholder="Type here"
@@ -135,7 +128,7 @@ export default function CreateBranchPage() {
                 <span className="label-text">Longitude</span>
               </label>
               <input
-                type="text"
+                type="number"
                 onChange={handleLongInput}
                 value={long}
                 placeholder="Type here"

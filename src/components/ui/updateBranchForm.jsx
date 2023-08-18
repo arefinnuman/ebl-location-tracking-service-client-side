@@ -2,21 +2,34 @@ import { useUpdateBranchMutation } from "@/redux/api/api";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-export default function UpdateBranchForm({ selectedBranch }) {
-  const id = selectedBranch._id;
-  const [name, setName] = useState("");
-  const [division, setDivision] = useState("");
-  const [address, setAddress] = useState("");
-  const [mapLink, setMapLink] = useState("");
-  const [code, setCode] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+export default function UpdateBranchForm({ selectedUpdateBranch }) {
+  const id = selectedUpdateBranch._id;
+  const updatingBranchApi = `http://localhost:5555/api/v1/ebl-branches/${id}`;
 
-  const [updateBranch] = useUpdateBranchMutation();
+  const [name, setName] = useState(selectedUpdateBranch.branchName || "");
+  const [division, setDivision] = useState(
+    selectedUpdateBranch.branchDivision || ""
+  );
+  const [address, setAddress] = useState(
+    selectedUpdateBranch.branchAddress || ""
+  );
+  const [mapLink, setMapLink] = useState(
+    selectedUpdateBranch.branchMapLink || ""
+  );
+  const [code, setCode] = useState(selectedUpdateBranch.branchCode || "");
+  const [lat, setLat] = useState(
+    selectedUpdateBranch.branchLocation?.lat || ""
+  );
+  const [long, setLong] = useState(
+    selectedUpdateBranch.branchLocation?.long || ""
+  );
 
-  const handleSubmit = (e) => {
+  const [updateBranch, { isLoading }] = useUpdateBranchMutation();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const branchData = {
+      id,
       branchName: name,
       branchDivision: division,
       branchAddress: address,
@@ -28,8 +41,9 @@ export default function UpdateBranchForm({ selectedBranch }) {
       },
     };
 
+    const response = await updateBranch(branchData);
+
     toast.success("Branch updated successfully");
-    updateBranch(id, branchData);
     setName("");
     setDivision("");
     setAddress("");
@@ -60,7 +74,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
       {" "}
       <form className="w-full max-w-md" onSubmit={handleSubmit}>
         <h1 className="text-xl font-bold mb-3 text-center">
-          Update {selectedBranch.branchName} branch details
+          Update {selectedUpdateBranch.branchName} branch details
         </h1>
 
         <div className="form-control mb-3">
@@ -71,7 +85,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
             type="text"
             onChange={handleNameInput}
             value={name}
-            placeholder={selectedBranch.branchName}
+            placeholder={selectedUpdateBranch.branchName}
             className="input input-bordered input-primary w-full       "
           />
         </div>
@@ -84,7 +98,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
             type="text"
             onChange={handleAddressInput}
             value={address}
-            placeholder={selectedBranch.branchAddress}
+            placeholder={selectedUpdateBranch.branchAddress}
             className="input input-bordered input-primary w-full       "
           />
         </div>
@@ -97,7 +111,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
             type="text"
             onChange={handleDivisionInput}
             value={division}
-            placeholder={selectedBranch.branchDivision}
+            placeholder={selectedUpdateBranch.branchDivision}
             className="input input-bordered input-primary w-full       "
           />
         </div>
@@ -112,7 +126,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
                 type="text"
                 onChange={handleLatInput}
                 value={lat}
-                placeholder={selectedBranch.branchLocation.lat}
+                placeholder={selectedUpdateBranch.branchLocation.lat}
                 className="input input-bordered input-primary"
               />
             </div>
@@ -124,7 +138,7 @@ export default function UpdateBranchForm({ selectedBranch }) {
                 type="text"
                 onChange={handleLongInput}
                 value={long}
-                placeholder={selectedBranch.branchLocation.long}
+                placeholder={selectedUpdateBranch.branchLocation.long}
                 className="input input-bordered input-primary"
               />
             </div>
@@ -138,3 +152,4 @@ export default function UpdateBranchForm({ selectedBranch }) {
     </div>
   );
 }
+

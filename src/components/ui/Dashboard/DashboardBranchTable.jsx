@@ -7,13 +7,10 @@ import { FaEye } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import BranchModal from "../MapModal/BranchModal";
+import UpdateBranchForm from "../updateBranchForm";
 
 const DashboardBranchTable = () => {
   const [branches, setBranches] = useState();
-
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [branchToDelete, setBranchToDelete] = useState(null);
-
   const { data, isLoading, refetch } = useGetBranchesQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 9000,
@@ -25,8 +22,6 @@ const DashboardBranchTable = () => {
     }
   }, [data]);
 
-  const numberOfBranches = branches?.length;
-
   const branchDivisions = branches?.map((branch) => branch.branchDivision);
   const uniqueBranchDivisions = [
     ...new Set(branchDivisions?.map((item) => item.trim().toLowerCase())),
@@ -34,7 +29,6 @@ const DashboardBranchTable = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedBranch, setSelectedBranch] = useState(null);
 
   const filteredBranches = branches
     ? branches.filter(
@@ -53,6 +47,13 @@ const DashboardBranchTable = () => {
       )
     : [];
 
+  const [selectedBranch, setSelectedBranch] = useState(null);
+
+  const [selectedUpdateBranch, setSelectedUpdateBranch] = useState(null);
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [branchToDelete, setBranchToDelete] = useState(null);
+
   const [deleteBranch] = useDeleteBranchMutation(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
@@ -65,7 +66,7 @@ const DashboardBranchTable = () => {
       refetch();
       setShowDeleteConfirmation(false);
     } catch (error) {
-      console.log("Error", error);
+      toast.error(error.message);
     }
   };
 
@@ -74,6 +75,7 @@ const DashboardBranchTable = () => {
     setShowDeleteConfirmation(true);
   };
 
+  const numberOfBranches = branches?.length;
   return (
     <>
       {isLoading ? (
@@ -155,7 +157,7 @@ const DashboardBranchTable = () => {
                       <td className="px-4 py-3 border">
                         <button
                           className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
-                          onClick={() => setSelectedBranch(branch)}
+                          onClick={() => setSelectedUpdateBranch(branch)}
                         >
                           Edit
                           <FiEdit2 className="ml-2" />
@@ -176,6 +178,7 @@ const DashboardBranchTable = () => {
               </table>
             </div>
           </div>
+
           {selectedBranch && (
             <dialog
               id="my_modal_5"
@@ -195,6 +198,30 @@ const DashboardBranchTable = () => {
               </form>
             </dialog>
           )}
+
+          {selectedUpdateBranch && (
+            <dialog
+              id="my_modal_2"
+              className="modal modal-bottom sm:modal-middle "
+              open
+            >
+              <section
+                method="dialog"
+                className="modal-box border border-secondary"
+              >
+                <UpdateBranchForm selectedUpdateBranch={selectedUpdateBranch} />
+                <div className="modal-action text-center flex justify-center">
+                  <button
+                    className="btn btn-sm btn-outline "
+                    onClick={() => setSelectedUpdateBranch(null)}
+                  >
+                    Close The Modal
+                  </button>
+                </div>
+              </section>
+            </dialog>
+          )}
+
           {showDeleteConfirmation && (
             <DeleteConfirmationModal
               onConfirm={() => {

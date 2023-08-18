@@ -29,8 +29,6 @@ export default function CreateAgentPage() {
     };
 
     const response = await createAgent(agentData);
-    console.log(response);
-
     if (response?.data?.statusCode == 200) {
       toast.success("Agent Banking Outlet Created Successfully!");
       setName("");

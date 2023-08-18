@@ -107,10 +107,10 @@ export const apiSlice = createApi({
     }),
 
     updateBranch: builder.mutation({
-      query: (id) => ({
-        url: `/ebl-branches/${id}`,
+      query: (branchData) => ({
+        url: `/ebl-branches/${branchData.id}`,
         method: "PATCH",
-        body: { ...data },
+        body: branchData,
       }),
       invalidatesTags: ["eblbranches"],
     }),

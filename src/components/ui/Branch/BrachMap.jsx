@@ -18,8 +18,6 @@ const BranchMapComponent = () => {
     setBranchesData(branches?.data);
   }, [branches]);
 
-  console.log(branchesData);
-
   const branchLocations = branchesData?.map((branch) => ({
     lat: branch?.branchLocation?.lat,
     lng: branch?.branchLocation?.long,
