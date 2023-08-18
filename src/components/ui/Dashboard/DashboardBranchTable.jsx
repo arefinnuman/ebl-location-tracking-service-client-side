@@ -63,16 +63,14 @@ const DashboardBranchTable = () => {
       await deleteBranch(branchToDelete);
       toast.success("Branch deleted successfully");
       refetch();
-      setShowDeleteConfirmation(false); // Hide the confirmation modal
+      setShowDeleteConfirmation(false);
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   const handleDeleteButtonClick = (branchId) => {
-    // Set the branch id to delete
     setBranchToDelete(branchId);
-    // Show the delete confirmation modal
     setShowDeleteConfirmation(true);
   };
 

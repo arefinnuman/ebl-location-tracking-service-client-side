@@ -3,7 +3,7 @@ import { GoogleMap, MarkerF } from "@react-google-maps/api";
 const AgentModal = ({ selectedAgent }) => {
   const center = {
     lat: selectedAgent?.agentLocation?.lat,
-    lng: selectedAgent.agentLocation?.long,
+    lng: selectedAgent?.agentLocation?.long,
   };
 
   return (

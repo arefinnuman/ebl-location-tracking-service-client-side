@@ -29,6 +29,7 @@ export default function CreateBranchPage() {
     };
 
     const response = await createBranch(branchData);
+    console.log(response);
     if (response?.data?.statusCode == 201) {
       toast.success("Branch created successfully");
       setName("");

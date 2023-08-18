@@ -14,9 +14,9 @@ export default function Create365BoothPage() {
 
   const [create365] = usePost365OutletsMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const ata = {
+    const data = {
       ebl365Name: name,
       ebl365Division: division,
       ebl365Address: address,
@@ -26,16 +26,20 @@ export default function Create365BoothPage() {
       long: long,
     };
 
-    toast.success("365 booth created successfully");
-
-    create365(ata);
-    setName("");
-    setDivision("");
-    setAddress("");
-    setMapLink("");
-    setCode("");
-    setLat("");
-    setLong("");
+    const response = await create365(data);
+    console.log(response);
+    if (response?.data?.statusCode == 200) {
+      toast.success("365 booth created successfully");
+      setName("");
+      setDivision("");
+      setAddress("");
+      setMapLink("");
+      setCode("");
+      setLat("");
+      setLong("");
+    } else if (response?.error?.data?.success === false) {
+      toast.error("Please try again. and check your data");
+    }
   };
 
   const handleNameInput = (e) => {
@@ -151,3 +155,4 @@ export default function Create365BoothPage() {
 Create365BoothPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+

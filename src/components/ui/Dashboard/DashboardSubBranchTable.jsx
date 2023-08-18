@@ -1,12 +1,32 @@
 import RootLayout from "@/components/layout/RootLayout";
-import { useGetSubBranchesQuery } from "@/redux/api/api";
-import { useState } from "react";
+import {
+  useDeleteSubBranchMutation,
+  useGetSubBranchesQuery,
+} from "@/redux/api/api";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { AiFillDelete } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
+import { FiEdit2 } from "react-icons/fi";
+import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import SubBranchModal from "../MapModal/SubBranchModal";
 
 const DashboardSubBranchTable = () => {
-  const { data, isLoading } = useGetSubBranchesQuery();
-  const subBranches = data?.data;
+  const [subBranches, setSubBranches] = useState();
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [branchToDelete, setBranchToDelete] = useState(null);
+
+  const { data, isLoading, refetch } = useGetSubBranchesQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 9000,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setSubBranches(data?.data);
+    }
+  }, [data]);
 
   const numberOfSubBranches = subBranches?.length;
 
@@ -37,6 +57,27 @@ const DashboardSubBranchTable = () => {
             subBranch.subBranchDivision.toLowerCase() === selectedDivision)
       )
     : [];
+
+  const [deleteSubBranch] = useDeleteSubBranchMutation(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
+
+  const handleDeleteBranch = async () => {
+    try {
+      await deleteSubBranch(branchToDelete);
+      toast.success("Sub Branch deleted successfully");
+      refetch();
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const handleDeleteButtonClick = (branchId) => {
+    setBranchToDelete(branchId);
+    setShowDeleteConfirmation(true);
+  };
 
   return (
     <>
@@ -79,7 +120,7 @@ const DashboardSubBranchTable = () => {
               </select>
             </div>
 
-            <div className="w-full max-w-3xl px-6 mx-auto bg-white rounded-lg mb-6">
+            <div className="w-full max-w-6xl px-6 mx-auto bg-white rounded-lg mb-6">
               <div className="overflow-x-auto">
                 <table className="table w-full border-collapse">
                   <thead>
@@ -89,6 +130,8 @@ const DashboardSubBranchTable = () => {
                       <th className="px-4 py-3 border">District</th>
                       <th className="px-4 py-3 border">Address</th>
                       <th className="px-4 py-3 border">Location</th>
+                      <th className="px-4 py-3 border">Edit</th>
+                      <th className="px-4 py-3 border">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -108,11 +151,31 @@ const DashboardSubBranchTable = () => {
                         </td>
                         <td className="px-4 py-3 border">
                           <button
-                            className="flex items-center px-3 py-1.5 border text-black border-primary rounded-full shadow hover:bg-primary hover:border-primary transition duration-300 hover:text-white"
-                            onClick={() => setSelectedSubBranch(subBranch)}
+                            className="flex items-center px-3 py-1.5 text-black border-primary rounded-full shadow hover:bg-primary hover:border-primary transition duration-300 hover:text-white text-sm"
+                            onClick={() => selectedSubBranch(subBranch)}
                           >
                             <FaEye className="mr-2" />
                             View
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border">
+                          <button
+                            className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
+                            onClick={() => selectedSubBranch(subBranch)}
+                          >
+                            Edit
+                            <FiEdit2 className="ml-2" />
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border">
+                          <button
+                            className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-error hover:border-base transition duration-300 hover:text-white text-sm"
+                            onClick={() =>
+                              handleDeleteButtonClick(subBranch._id)
+                            }
+                          >
+                            Del
+                            <AiFillDelete className="ml-1" />
                           </button>
                         </td>
                       </tr>
@@ -141,6 +204,16 @@ const DashboardSubBranchTable = () => {
                 </div>
               </form>
             </dialog>
+          )}
+
+          {showDeleteConfirmation && (
+            <DeleteConfirmationModal
+              onConfirm={() => {
+                handleDeleteBranch(branchToDelete);
+                setShowDeleteConfirmation(false);
+              }}
+              onCancel={() => setShowDeleteConfirmation(false)}
+            />
           )}
         </>
       )}

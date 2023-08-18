@@ -12,7 +12,7 @@ export default function CreateAgentPage() {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
 
-  const [createAgent, { isSuccess }] = usePostAgentOutletsMutation();
+  const [createAgent] = usePostAgentOutletsMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,15 +28,21 @@ export default function CreateAgentPage() {
       },
     };
 
-    await createAgent(agentData);
-    toast.success("Agent Banking Outlet Created Successfully!");
-    setName("");
-    setDivision("");
-    setAddress("");
-    setMapLink("");
-    setCode("");
-    setLat("");
-    setLong("");
+    const response = await createAgent(agentData);
+    console.log(response);
+
+    if (response?.data?.statusCode == 200) {
+      toast.success("Agent Banking Outlet Created Successfully!");
+      setName("");
+      setDivision("");
+      setAddress("");
+      setMapLink("");
+      setCode("");
+      setLat("");
+      setLong("");
+    } else if (response?.error?.data?.success === false) {
+      toast.error("Please try again. and check your data");
+    }
   };
 
   const handleNameInput = (e) => {
@@ -152,3 +158,4 @@ export default function CreateAgentPage() {
 CreateAgentPage.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
+
