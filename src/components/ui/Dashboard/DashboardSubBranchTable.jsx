@@ -10,12 +10,10 @@ import { FaEye } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import SubBranchModal from "../MapModal/SubBranchModal";
+import UpdateSubBranchForm from "../UpdateForms/UpdateSubBranchForm";
 
 const DashboardSubBranchTable = () => {
   const [subBranches, setSubBranches] = useState();
-
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [branchToDelete, setBranchToDelete] = useState(null);
 
   const { data, isLoading, refetch } = useGetSubBranchesQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -28,8 +26,6 @@ const DashboardSubBranchTable = () => {
     }
   }, [data]);
 
-  const numberOfSubBranches = subBranches?.length;
-
   const branchDivisions = subBranches?.map(
     (branch) => branch.subBranchDivision
   );
@@ -39,7 +35,6 @@ const DashboardSubBranchTable = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedSubBranch, setSelectedSubBranch] = useState(null);
 
   const filteredSubBranches = subBranches
     ? subBranches.filter(
@@ -57,6 +52,13 @@ const DashboardSubBranchTable = () => {
             subBranch.subBranchDivision.toLowerCase() === selectedDivision)
       )
     : [];
+
+  const [selectedSubBranch, setSelectedSubBranch] = useState(null);
+
+  const [selectedUpdateSubBranch, setSelectedUpdateSubBranch] = useState(null);
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [branchToDelete, setBranchToDelete] = useState(null);
 
   const [deleteSubBranch] = useDeleteSubBranchMutation(undefined, {
     refetchOnMountOrArgChange: true,
@@ -78,6 +80,8 @@ const DashboardSubBranchTable = () => {
     setBranchToDelete(branchId);
     setShowDeleteConfirmation(true);
   };
+
+  const numberOfSubBranches = subBranches?.length;
 
   return (
     <>
@@ -161,7 +165,9 @@ const DashboardSubBranchTable = () => {
                         <td className="px-4 py-3 border">
                           <button
                             className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
-                            onClick={() => selectedSubBranch(subBranch)}
+                            onClick={() =>
+                              setSelectedUpdateSubBranch(subBranch)
+                            }
                           >
                             Edit
                             <FiEdit2 className="ml-2" />
@@ -203,6 +209,31 @@ const DashboardSubBranchTable = () => {
                   </button>
                 </div>
               </form>
+            </dialog>
+          )}
+
+          {selectedUpdateSubBranch && (
+            <dialog
+              id="my_modal_2"
+              className="modal modal-bottom sm:modal-middle "
+              open
+            >
+              <section
+                method="dialog"
+                className="modal-box border border-primary shadow-2xl"
+              >
+                <UpdateSubBranchForm
+                  selectedUpdateSubBranch={selectedUpdateSubBranch}
+                />
+                <div className="modal-action text-center flex justify-center">
+                  <button
+                    className="btn btn-sm btn-outline "
+                    onClick={() => setSelectedUpdateSubBranch(null)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </section>
             </dialog>
           )}
 

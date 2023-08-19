@@ -8,12 +8,10 @@ import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import AgentModal from "../MapModal/AgentModal";
+import UpdateAgentForm from "../UpdateForms/UpdateAgentForm";
 
 const DashboardAgentOutletTable = () => {
   const [agentOutlets, setAgentOutlets] = useState();
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [branchToDelete, setBranchToDelete] = useState(null);
-
   const { data, isLoading, refetch } = useGetAgentOutletsQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 9000,
@@ -25,8 +23,6 @@ const DashboardAgentOutletTable = () => {
     }
   }, [data]);
 
-  const numberOfAgents = agentOutlets?.length;
-
   const agentDivisions = agentOutlets?.map((agent) => agent.agentDivision);
   const uniqueAgentDivisions = [
     ...new Set(agentDivisions?.map((item) => item.trim().toLowerCase())),
@@ -34,7 +30,6 @@ const DashboardAgentOutletTable = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedAgent, setSelectedAgent] = useState(null);
 
   const filteredAgentOutlets = agentOutlets
     ? agentOutlets.filter(
@@ -51,6 +46,12 @@ const DashboardAgentOutletTable = () => {
       )
     : [];
 
+  const [selectedAgent, setSelectedAgent] = useState(null);
+
+  const [selectedUpdateAgent, setSelectedUpdateAgent] = useState(null);
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [branchToDelete, setBranchToDelete] = useState(null);
   const [deleteOutlet] = useDeleteAgentOutletsMutation(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
@@ -58,7 +59,7 @@ const DashboardAgentOutletTable = () => {
 
   const handleDeleteAgent = async () => {
     try {
-      const response = await deleteOutlet(branchToDelete);
+      await deleteOutlet(branchToDelete);
       toast.success("Agent deleted successfully");
       refetch();
       setShowDeleteConfirmation(false);
@@ -72,6 +73,7 @@ const DashboardAgentOutletTable = () => {
     setShowDeleteConfirmation(true);
   };
 
+  const numberOfAgents = agentOutlets?.length;
   return (
     <>
       {isLoading ? (
@@ -135,7 +137,7 @@ const DashboardAgentOutletTable = () => {
                         </td>
                         <td className="px-4 py-3 border">{agent.agentName}</td>
                         <td className="px-4 py-3 border">
-                          {agent.agentDivision}
+                          {agent.agentDivision} 
                         </td>
                         <td className="px-4 py-3 border md:w-1/2">
                           {agent.agentAddress}
@@ -151,7 +153,7 @@ const DashboardAgentOutletTable = () => {
                         <td className="px-4 py-3 border">
                           <button
                             className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
-                            onClick={() => setSelectedBranch(branch)}
+                            onClick={() => setSelectedUpdateAgent(agent)}
                           >
                             Edit
                             <FiEdit2 className="ml-2" />
@@ -190,6 +192,29 @@ const DashboardAgentOutletTable = () => {
                     </button>
                   </div>
                 </form>
+              </dialog>
+            )}
+
+            {selectedUpdateAgent && (
+              <dialog
+                id="my_modal_2"
+                className="modal modal-bottom sm:modal-middle "
+                open
+              >
+                <section
+                  method="dialog"
+                  className="modal-box border border-primary shadow-2xl"
+                >
+                  <UpdateAgentForm selectedUpdateAgent={selectedUpdateAgent} />
+                  <div className="modal-action text-center flex justify-center">
+                    <button
+                      className="btn btn-sm btn-outline "
+                      onClick={() => setSelectedUpdateAgent(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </section>
               </dialog>
             )}
 

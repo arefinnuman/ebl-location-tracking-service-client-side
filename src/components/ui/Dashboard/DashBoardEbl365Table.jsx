@@ -8,6 +8,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import Ebl365Modal from "../MapModal/Ebl365Modal";
+import Update365BoothForm from "../UpdateForms/Update365BoothForm";
 
 const DashboardEbl365Table = () => {
   const [ebl365booths, setEbl365Booths] = useState();
@@ -21,13 +22,11 @@ const DashboardEbl365Table = () => {
     }
   }, [data]);
 
-  const numberOfBooths = ebl365booths?.length;
   const boothDivisions = ebl365booths?.map((booth) => booth.ebl365Division);
   const uniqueBranchDivisions = [...new Set(boothDivisions)];
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
-  const [selectedBooth, setSelectedBooth] = useState(null);
 
   const filteredEbl365booths = ebl365booths
     ? ebl365booths.filter((ebl365) => {
@@ -60,6 +59,10 @@ const DashboardEbl365Table = () => {
       })
     : [];
 
+  const [selectedBooth, setSelectedBooth] = useState(null);
+
+  const [selectedUpdateBooth, setSelectedUpdateBooth] = useState(null);
+
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [branchToDelete, setBranchToDelete] = useState(null);
 
@@ -84,6 +87,7 @@ const DashboardEbl365Table = () => {
     setShowDeleteConfirmation(true);
   };
 
+  const numberOfBooths = ebl365booths?.length;
   return (
     <>
       {isLoading ? (
@@ -170,7 +174,7 @@ const DashboardEbl365Table = () => {
                         <td className="px-4 py-3 border">
                           <button
                             className="flex items-center  px-3 py-1.5 text-black rounded-full shadow hover:bg-primary-focus hover:border-base transition duration-300 hover:text-white text-sm"
-                            onClick={() => setSelectedBranch(branch)}
+                            onClick={() => setSelectedUpdateBooth(ebl365)}
                           >
                             Edit
                             <FiEdit2 className="ml-2" />
@@ -209,6 +213,31 @@ const DashboardEbl365Table = () => {
                     </button>
                   </div>
                 </form>
+              </dialog>
+            )}
+
+            {selectedUpdateBooth && (
+              <dialog
+                id="my_modal_2"
+                className="modal modal-bottom sm:modal-middle "
+                open
+              >
+                <section
+                  method="dialog"
+                  className="modal-box border border-primary shadow-2xl"
+                >
+                  <Update365BoothForm
+                    selectedUpdateBooth={selectedUpdateBooth}
+                  />
+                  <div className="modal-action text-center flex justify-center">
+                    <button
+                      className="btn btn-sm btn-outline "
+                      onClick={() => setSelectedUpdateBooth(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </section>
               </dialog>
             )}
 

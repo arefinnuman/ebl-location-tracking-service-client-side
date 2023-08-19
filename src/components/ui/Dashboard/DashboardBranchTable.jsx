@@ -1,4 +1,3 @@
-import RootLayout from "@/components/layout/RootLayout";
 import { useDeleteBranchMutation, useGetBranchesQuery } from "@/redux/api/api";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -7,10 +6,11 @@ import { FaEye } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import DeleteConfirmationModal from "../DeleteConFirmationModal";
 import BranchModal from "../MapModal/BranchModal";
-import UpdateBranchForm from "../updateBranchForm";
+import UpdateBranchForm from "../UpdateForms/UpdateBranchForm";
 
 const DashboardBranchTable = () => {
   const [branches, setBranches] = useState();
+
   const { data, isLoading, refetch } = useGetBranchesQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 9000,
@@ -207,7 +207,7 @@ const DashboardBranchTable = () => {
             >
               <section
                 method="dialog"
-                className="modal-box border border-secondary"
+                className="modal-box border border-primary shadow-2xl"
               >
                 <UpdateBranchForm selectedUpdateBranch={selectedUpdateBranch} />
                 <div className="modal-action text-center flex justify-center">
@@ -215,7 +215,7 @@ const DashboardBranchTable = () => {
                     className="btn btn-sm btn-outline "
                     onClick={() => setSelectedUpdateBranch(null)}
                   >
-                    Close The Modal
+                    Close
                   </button>
                 </div>
               </section>
@@ -235,10 +235,6 @@ const DashboardBranchTable = () => {
       )}
     </>
   );
-};
-
-DashboardBranchTable.getLayout = function getLayout(page) {
-  return <RootLayout>{page}</RootLayout>;
 };
 
 export default DashboardBranchTable;

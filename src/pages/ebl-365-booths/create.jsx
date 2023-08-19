@@ -27,6 +27,7 @@ export default function Create365BoothPage() {
     };
 
     const response = await create365(data);
+
     if (response?.data?.statusCode == 200) {
       toast.success("365 booth created successfully");
       setName("");

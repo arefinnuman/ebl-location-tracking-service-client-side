@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import DashBoardUi from "@/components/ui/DashBoardUi";
+import DashBoardUi from "@/components/ui/Dashboard/DashBoardUi";
 
 const DashboardPage = () => {
   return (

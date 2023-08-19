@@ -114,6 +114,33 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["eblbranches"],
     }),
+
+    updateSubBranch: builder.mutation({
+      query: (subBranchData) => ({
+        url: `/ebl-sub-branches/${subBranchData.id}`,
+        method: "PATCH",
+        body: subBranchData,
+      }),
+      invalidatesTags: ["eblsubbranches"],
+    }),
+
+    updateAgentOutlets: builder.mutation({
+      query: (agentData) => ({
+        url: `/ebl-agents/${agentData.id}`,
+        method: "PATCH",
+        body: agentData,
+      }),
+      invalidatesTags: ["eblagents"],
+    }),
+
+    update365Outlets: builder.mutation({
+      query: (outletData) => ({
+        url: `/ebl-365/${outletData.id}`,
+        method: "PATCH",
+        body: outletData,
+      }),
+      invalidatesTags: ["ebl365"],
+    }),
   }),
 });
 
@@ -134,5 +161,8 @@ export const {
   useDeleteAgentOutletsMutation,
   useDelete365OutletsMutation,
   useUpdateBranchMutation,
+  useUpdateSubBranchMutation,
+  useUpdateAgentOutletsMutation,
+  useUpdate365OutletsMutation,
 } = apiSlice;
 
