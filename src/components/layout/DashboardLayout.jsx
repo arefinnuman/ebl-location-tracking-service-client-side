@@ -1,6 +1,7 @@
+import jwtDecode from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 import Footer from "./Footer";
@@ -13,37 +14,72 @@ const DashboardLayout = ({ children }) => {
     }
   }, []);
 
+  const [user, setUser] = useState(null);
+
+  const getUserFromToken = () => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          return decodedToken;
+        } catch (error) {
+          console.error("Error decoding token:", error);
+        }
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const user = getUserFromToken();
+    setUser(user);
+  }, []);
+
+  const fullName = [
+    user?.fullName?.firstName,
+    user?.fullName?.middleName,
+    user?.fullName?.lastName,
+  ]
+    .filter((namePart) => namePart)
+    .join(" ");
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
 
+  const userRole = user?.role;
+
   const navBarItems = (
     <>
-      <li>
+      <li className="py-2">
         <Link
           href="/all-locations"
-          className="relative inline-flex items-center py-2 px-4 rounded-md text-white font-medium transition duration-300 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary mr-2"
+          className="flex items-center px-3 py-2 rounded-md transition duration-300 hover:bg-primary hover:text-white"
         >
-          <FaMapMarkerAlt className="mr-2" /> EBL Locations
+          <FaMapMarkerAlt className="text-lg mr-2" />{" "}
+          <span className="text-base">EBL Locations</span>
         </Link>
       </li>
-      <li>
-        <Link
-          href="/dashboard"
-          className="flex items-center px-3 py-2 text-primary hover:text-white hover:bg-primary hover:border-primary border rounded-md transition duration-300 mr-2"
-        >
-          <FaChartBar className="text-xl mr-2" />
-          Dashboard
-        </Link>
-      </li>
-      <li>
+      {userRole === "admin" && (
+        <li className="py-2">
+          <Link
+            href="/dashboard"
+            className="flex items-center px-3 py-2 rounded-md transition duration-300 hover:bg-primary hover:text-white"
+          >
+            <FaChartBar className="text-lg mr-2" />{" "}
+            <span className="text-base">Dashboard</span>
+          </Link>
+        </li>
+      )}
+      <li className="py-2">
         <button
           onClick={handleLogOut}
-          className="flex items-center px-3 py-2 text-gray-700 hover:text-primary hover:bg-secondary hover:border-primary border rounded-md transition duration-300 "
+          className="flex items-center px-3 py-2 text-gray-700 rounded-md transition duration-300 hover:text-primary hover:bg-secondary"
         >
-          <FaSignOutAlt className="text-primary mr-2" />
-          Logout
+          <FaSignOutAlt className="text-primary mr-2" />{" "}
+          <span className="text-base">Logout</span>
         </button>
       </li>
     </>
@@ -65,6 +101,26 @@ const DashboardLayout = ({ children }) => {
 
   const menuItems = (
     <>
+      <li className="text-xl text-primary">Edit And Delete</li>
+      <li>
+        <Link href="/dashboard-locations/branches">View Branches</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/sub-branches">View Sub Branches</Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/agent-outlets">
+          View Agent Outlets
+        </Link>
+      </li>
+      <li>
+        <Link href="/dashboard-locations/ebl-365">View EBL 365 Booths</Link>
+      </li>
+      <li>
+        <Link href="/users">View All users</Link>
+      </li>
+
+      <li className="text-xl text-primary-focus">Create and Register</li>
       <li>
         <Link href="/branches/create">Create Branch</Link>
       </li>
@@ -78,22 +134,7 @@ const DashboardLayout = ({ children }) => {
         <Link href="/ebl-365-booths/create">Create Ebl 365</Link>
       </li>
       <li>
-        <Link href="/create-user">Create User</Link>
-      </li>
-      <li>
-        <Link href="/users">View All users</Link>
-      </li>
-      <li>
-        <Link href="/dashboard-locations/branches">Branches</Link>
-      </li>
-      <li>
-        <Link href="/dashboard-locations/sub-branches">Sub Branches</Link>
-      </li>
-      <li>
-        <Link href="/dashboard-locations/agent-outlets">Agent Outlets</Link>
-      </li>
-      <li>
-        <Link href="/dashboard-locations/ebl-365">EBL 365 Booths</Link>
+        <Link href="/register">Create User</Link>
       </li>
     </>
   );
@@ -150,6 +191,7 @@ const DashboardLayout = ({ children }) => {
           </ul>
         </div>
       </div>
+      {/*Drawer with children*/}
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">{children}</div>
@@ -160,6 +202,7 @@ const DashboardLayout = ({ children }) => {
           </ul>
         </div>
       </div>
+      {/* Footer */}
       <Footer />
     </>
   );

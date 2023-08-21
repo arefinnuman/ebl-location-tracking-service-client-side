@@ -24,9 +24,12 @@ const CustomLoadingElement = () => (
   </div>
 );
 
-export default function App({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => page);
+export async function getServerSideProps() {}
 
+export default function App({ Component, pageProps }) {
+  const reactGoogleMapApiKey = process.env.NEXT_PUBLIC_REACT_GOOGLE_MAP_API_KEY;
+
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <>
       <Head>
@@ -37,7 +40,7 @@ export default function App({ Component, pageProps }) {
         <Provider store={store}>
           {getLayout(
             <LoadScript
-              googleMapsApiKey=""
+              googleMapsApiKey={reactGoogleMapApiKey}
               loadingElement={<CustomLoadingElement />}
             >
               <Component {...pageProps} />

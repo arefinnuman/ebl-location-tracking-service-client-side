@@ -141,6 +141,43 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["ebl365"],
     }),
+
+    createUser: builder.mutation({
+      query: (userData) => ({
+        url: `/users/`,
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["users"],
+    }),
+
+    updateToAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/users/update-to-admin/${id}`,
+        method: "PATCH",
+      }),
+    }),
+
+    updateToViewer: builder.mutation({
+      query: (id) => ({
+        url: `/users/update-to-viewer/${id}`,
+        method: "PATCH",
+      }),
+    }),
+
+    approvedByAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/users/approved-by-admin${id}`,
+        method: "PATCH",
+      }),
+    }),
+
+    rejectedByAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/users/rejected-by-admin/${id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -164,5 +201,10 @@ export const {
   useUpdateSubBranchMutation,
   useUpdateAgentOutletsMutation,
   useUpdate365OutletsMutation,
+  useCreateUserMutation,
+  useUpdateToAdminMutation,
+  useUpdateToViewerMutation,
+  useApprovedByAdminMutation,
+  useRejectedByAdminMutation,
 } = apiSlice;
 
