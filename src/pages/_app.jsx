@@ -36,6 +36,7 @@ export default function App({ Component, pageProps }) {
         <title>Eastern Bank Limited</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div className={poppins.className}>
         <Provider store={store}>
           {getLayout(

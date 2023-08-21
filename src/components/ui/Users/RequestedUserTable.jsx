@@ -1,7 +1,6 @@
 import {
   useApprovedByAdminMutation,
   useGetAllUserQuery,
-  useRejectedByAdminMutation,
 } from "@/redux/api/api";
 import { toast } from "react-hot-toast";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -13,18 +12,17 @@ const RequestedUserTable = () => {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
   });
-  const users = data?.data;
 
-  const unApprovedUserData = users?.filter(
+  const users = data?.data;
+  const requestedUser = users?.filter(
     (user) => user?.approvedByAdmin === false
   );
+  const [approvedUser] = useApprovedByAdminMutation();
+  const [rejectUser] = useApprovedByAdminMutation();
 
-  const [approvedByAdmin] = useApprovedByAdminMutation();
-  const [rejectedByAdmin] = useRejectedByAdminMutation();
-
-  const handleApprovedByAdmin = async (employeeId) => {
+  const handleApprovedUser = async (employeeId) => {
     try {
-      const response = await approvedByAdmin(employeeId);
+      const response = await approvedUser(employeeId);
       toast.success(response?.data?.message);
       refetch();
     } catch (error) {
@@ -32,9 +30,9 @@ const RequestedUserTable = () => {
     }
   };
 
-  const handleRejectedByAdmin = async (employeeId) => {
+  const handleRejectUser = async (employeeId) => {
     try {
-      const response = await rejectedByAdmin(employeeId);
+      const response = await rejectUser(employeeId);
       toast.success(response?.data?.message);
       refetch();
     } catch (error) {
@@ -44,93 +42,79 @@ const RequestedUserTable = () => {
 
   return (
     <div>
-      {" "}
       <section>
-        <h1 className="text-xl font-semibold my-8 text-center">
-          Requested User List
-        </h1>
-        <div className="max-w-5xl px-6 mx-auto bg-white rounded-lg">
-          <div className="overflow-x-auto">
-            <table className="table w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-3 border">Sl</th>
-                  <th className="px-4 py-3 border">Full Name</th>
-                  <th className="px-4 py-3 border">Email</th>
-                  <th className="px-4 py-3 border">Designation</th>
-                  <th className="px-4 py-3 border">Department</th>
-                  <th className="px-4 py-3 border">Role</th>
-                  <th className="px-4 py-3 border">Edit</th>
-                  <th className="px-4 py-3 border">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {unApprovedUserData &&
-                  unApprovedUserData.map((user, index) => (
-                    <tr className="hover:bg-gray-50" key={user._id}>
-                      <td className="px-4 py-3 text-center border">
-                        {index + 1}
-                      </td>
-                      <td className="px-4 py-3 border md:w-1/3">
-                        {user?.fullName?.firstName} {user?.fullName?.lastName}
-                      </td>
-                      <td className="px-4 py-3 border">{user?.email}</td>
-                      <td className="px-4 py-3 border md:w-1/5">
-                        {user?.designation}
-                      </td>
-                      <td className="px-4 py-3 border md:w-1/5">
-                        {user?.department}
-                      </td>
-
-                      <td className=" px-4 py-3 border md:w-1/5">
-                        {user?.approvedByAdmin === false ? (
-                          <div className="tooltip" data-tip="Update to User">
-                            <button
-                              onClick={() => {
-                                handleApprovedByAdmin(user.employeeId);
-                              }}
-                              className="justify-center w-32 py-2 px-4 border border-gray-300 bg-gray-200 hover:bg-gray-200 rounded-md flex items-center space-x-2 transition duration-300"
-                            >
-                              <FaUser className="text-gray-600 text-lg" />
-                              <span className="text-sm font-semibold text-gray-800">
-                                Approve
-                              </span>
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="tooltip" data-tip="Update to Admin">
-                            <button
-                              onClick={() => {
-                                handleRejectedByAdmin(user.employeeId);
-                              }}
-                              className="justify-center w-32 py-2 px-4 border border-gray-300 bg-gray-100 rounded-md flex items-center space-x-2 transition duration-300 hover:bg-base-300"
-                            >
-                              <FaUserCog className="text-gray-600 text-lg" />
-                              <span className="text-sm font-semibold text-gray-800">
-                                Reject
-                              </span>
-                            </button>
-                          </div>
-                        )}
-                      </td>
-
-                      <td className="px-4 py-3 border">
-                        <button className="btn btn-sm btn-secondary-focus btn-outline">
-                          <BiEdit />
-                        </button>
-                      </td>
-
-                      <td className="px-4 py-3 border">
-                        <button className="btn btn-sm btn-error btn-outline">
-                          <AiOutlineDelete />
-                        </button>
-                      </td>
+        {requestedUser?.length === 0 ? (
+          <h1 className="text-xl font-semibold mb-8 text-center my-4">
+            No Requested User
+          </h1>
+        ) : (
+          <>
+            <h1 className="text-xl font-semibold mb-8 text-center">
+              Users for approval
+            </h1>
+            <div className="max-w-5xl px-6 mx-auto bg-white rounded-lg">
+              <div className="overflow-x-auto">
+                <table className="table w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-4 py-3 border">Sl</th>
+                      <th className="px-4 py-3 border">Full Name</th>
+                      <th className="px-4 py-3 border">Email</th>
+                      <th className="px-4 py-3 border">Designation</th>
+                      <th className="px-4 py-3 border">Department</th>
+                      <th className="px-4 py-3 border">Role</th>
+                      <th className="px-4 py-3 border">Edit</th>
+                      <th className="px-4 py-3 border">Delete</th>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  </thead>
+                  <tbody>
+                    {requestedUser.map((user, index) => (
+                      <tr className="hover:bg-gray-50" key={user._id}>
+                        <td className="px-4 py-3 text-center border">
+                          {index + 1}
+                        </td>
+                        <td className="px-4 py-3 border md:w-1/3">
+                          {user?.fullName?.firstName} {user?.fullName?.lastName}
+                        </td>
+                        <td className="px-4 py-3 border">{user?.email}</td>
+                        <td className="px-4 py-3 border md:w-1/5">
+                          {user?.designation}
+                        </td>
+                        <td className="px-4 py-3 border md:w-1/5">
+                          {user?.department}
+                        </td>
+                        <td className="px-4 py-3 border md:w-1/5">
+                          <button
+                            onClick={() => handleApprovedUser(user.employeeId)}
+                          >
+                            <FaUser /> Approve
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border md:w-1/5">
+                          <button
+                            onClick={() => handleRejectUser(user.employeeId)}
+                          >
+                            <FaUserCog /> Reject
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border">
+                          <button>
+                            <BiEdit />
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 border">
+                          <button>
+                            <AiOutlineDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
       </section>
     </div>
   );

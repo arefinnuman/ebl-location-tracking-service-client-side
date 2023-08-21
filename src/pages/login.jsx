@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     try {
       const rawResponse = await fetch(
-        "http://localhost:5555/api/v1/auth/login",
+        "https://ebl-locations-server-v1.vercel.app/api/v1/auth/login",
         {
           method: "POST",
           headers: {

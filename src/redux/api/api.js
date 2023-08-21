@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5555/api/v1",
+    baseUrl: "https://ebl-locations-server-v1.vercel.app/api/v1",
   }),
   tagTypes: ["eblbranches", "eblsubbranches", "eblagents", "ebl365"],
 
@@ -167,7 +167,7 @@ export const apiSlice = createApi({
 
     approvedByAdmin: builder.mutation({
       query: (id) => ({
-        url: `/users/approved-by-admin${id}`,
+        url: `/users/approved-by-admin/${id}`,
         method: "PATCH",
       }),
     }),
@@ -177,6 +177,15 @@ export const apiSlice = createApi({
         url: `/users/rejected-by-admin/${id}`,
         method: "PATCH",
       }),
+    }),
+
+    createUserByAdmin: builder.mutation({
+      query: (userData) => ({
+        url: `/users/create-user-by-admin`,
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["users"],
     }),
   }),
 });
@@ -206,5 +215,6 @@ export const {
   useUpdateToViewerMutation,
   useApprovedByAdminMutation,
   useRejectedByAdminMutation,
+  useCreateUserByAdminMutation,
 } = apiSlice;
 

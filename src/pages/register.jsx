@@ -1,10 +1,10 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { useCreateUserMutation } from "@/redux/api/api";
+import { useCreateUserByAdminMutation } from "@/redux/api/api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const RegisterUserPage = () => {
-  const [createUser, { isLoading, isError }] = useCreateUserMutation();
+  const [createUser, { isLoading, isError }] = useCreateUserByAdminMutation();
 
   const {
     register,
