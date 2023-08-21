@@ -1,4 +1,5 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import LoadingUi from "@/components/ui/LoadingUi";
 import { useCreateUserByAdminMutation } from "@/redux/api/api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -45,12 +46,15 @@ const RegisterUserPage = () => {
     }
   };
 
+  if (isLoading) {
+    return <LoadingUi />;
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md mx-auto p-4 border rounded-lg shadow-md"
     >
-      {/* Employee Card Number */}
       <div className="mb-4">
         <label
           htmlFor="employeeCardNumber"

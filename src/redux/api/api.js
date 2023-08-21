@@ -69,14 +69,6 @@ export const apiSlice = createApi({
       invalidatesTags: ["ebl365"],
     }),
 
-    login: builder.mutation({
-      query: (data) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: { ...data },
-      }),
-    }),
-
     deleteBranch: builder.mutation({
       query: (id) => ({
         url: `/ebl-branches/${id}`,
@@ -187,6 +179,14 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["users"],
     }),
+
+    login: builder.mutation({
+      query: (data) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -200,7 +200,6 @@ export const {
   usePostSubBranchMutation,
   usePostAgentOutletsMutation,
   usePost365OutletsMutation,
-  useLoginMutation,
   useGetAllUserQuery,
   useDeleteBranchMutation,
   useDeleteSubBranchMutation,
@@ -216,5 +215,6 @@ export const {
   useApprovedByAdminMutation,
   useRejectedByAdminMutation,
   useCreateUserByAdminMutation,
+  useLoginMutation,
 } = apiSlice;
 

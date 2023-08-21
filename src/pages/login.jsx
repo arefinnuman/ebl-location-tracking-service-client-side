@@ -1,97 +1,83 @@
+import LoadingUi from "@/components/ui/LoadingUi";
+import { useLoginMutation } from "@/redux/api/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-
   const router = useRouter();
+  const [loginResponse, { isLoading }] = useLoginMutation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: {
+      employeeId: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data) => {
     const userData = {
-      id: id,
-      password: password,
+      id: data.employeeId,
+      password: data.password,
     };
-
     try {
-      const rawResponse = await fetch(
-        "https://ebl-locations-server-v1.vercel.app/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
-      const content = await rawResponse.json();
-
-      if (content?.data?.accessToken) {
-        localStorage.setItem("token", content?.data?.accessToken);
-
-        toast.success("Login Successful");
+      const response = await loginResponse(userData);
+      console.log(response);
+      if (response?.data?.success === true) {
+        localStorage.setItem("token", response?.data?.data?.accessToken);
+        toast.success("Login Successful !");
+        setValue("employeeId", "");
+        setValue("password", "");
         router.push("/");
-      } else if (content?.success === false) {
-        toast.error(content?.message);
-      } else {
-        toast.error("Login Failed !");
+      } else if (response?.error?.data?.success === false) {
+        toast.error(response?.error?.data?.message);
       }
-    } catch (err) {
-      toast.error("Login Failed !");
+    } catch (error) {
+      toast.error("Something went wrong");
     }
-
-    setId("");
-    setPassword("");
   };
 
-  const handleEmployeeIdInput = (e) => {
-    setId(e.target.value);
-  };
-  const handlePasswordInput = (e) => {
-    setPassword(e.target.value);
-  };
+  if (isLoading) {
+    return <LoadingUi />;
+  }
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      <div className="container flex flex-col mx-auto items-center lg:flex-row bg-white  rounded-lg">
-        <div className="w-1/2 p-8">
+    <div className="min-h-screen flex justify-center items-center px-4 sm:px-0">
+      <div className="container flex flex-col mx-auto items-center lg:flex-row bg-white rounded-lg">
+        <div className="w-full lg:w-1/2 p-8 flex justify-center">
           <Image
             width={500}
             height={500}
             src="https://i.ibb.co/4RgmNFB/IMG-5668.jpg"
             alt="Eastern Bank Logo"
+            className="max-w-full h-auto"
           />
         </div>
-        <div className="flex flex-col w-1/2 p-8">
+        <div className="flex flex-col w-full lg:w-1/2 p-8">
           <div>
-            <h2 className="text-3xl lg:text-4xl font-semibold">
-              <span className="text-5xl">W</span>elcome to{" "}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4">
+              <span className="text-4xl sm:text-5xl">W</span>elcome to{" "}
               <span className="text-primary">Digital Banking</span>
             </h2>
-            <p className="text-base lg:text-lg text-gray-700 mb-2">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-2">
               Location Tracking Service
             </p>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <input
+              {...register("employeeId", { required: true })}
               type="text"
               placeholder="Employee ID"
-              onChange={handleEmployeeIdInput}
-              value={id}
-              className="input input-bordered input-primary w-full max-w-md my-2"
+              className="input input-bordered input-primary w-full lg:w-96 my-2"
             />
             <input
+              {...register("password", { required: true })}
               type="password"
               placeholder="Password"
-              onChange={handlePasswordInput}
-              value={password}
-              className="input input-bordered input-primary w-full max-w-md my-2"
+              className="input input-bordered input-primary w-full lg:w-96 my-2"
             />
 
             <p className="text-gray-600 mb-4">
@@ -105,9 +91,9 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="btn btn-secondary rounded-2xl mt-2"
+              className="btn btn-secondary rounded-2xl mt-2 w-full sm:w-auto"
             >
-              Submit
+              Login
             </button>
           </form>
         </div>

@@ -1,3 +1,4 @@
+import LoadingUi from "@/components/ui/LoadingUi";
 import store from "@/redux/store";
 import "@/styles/globals.css";
 import { LoadScript } from "@react-google-maps/api";
@@ -20,7 +21,7 @@ const CustomLoadingElement = () => (
       height: "100vh",
     }}
   >
-    <span className="loading loading-bars loading-lg"></span>
+    <LoadingUi />
   </div>
 );
 

@@ -1,3 +1,4 @@
+import LoadingUi from "@/components/ui/LoadingUi";
 import { useCreateUserMutation } from "@/redux/api/api";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -45,6 +46,10 @@ const SignUpPage = () => {
       toast.error("Something went wrong");
     }
   };
+
+  if (isLoading) {
+    return <LoadingUi />;
+  }
 
   return (
     <div className="container py-4 mx-auto max-w-2xl">
