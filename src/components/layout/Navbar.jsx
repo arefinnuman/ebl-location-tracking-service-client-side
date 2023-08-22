@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChartBar, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 import easternBankImage from "../../../public/eastern-bank-ltd.gif";
 
@@ -68,34 +68,62 @@ const MobileDropdown = ({
   dropdownOpen,
   toggleDropdown,
   handleLogOut,
-}) => (
-  <div className="dropdown lg:hidden">
-    <button onClick={toggleDropdown} className="btn btn-ghost">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+}) => {
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        toggleDropdown();
+      }
+    }
+
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
+  return (
+    <div className="dropdown lg:hidden relative" ref={dropdownRef}>
+      <button onClick={toggleDropdown} className="btn btn-ghost">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M4 6h16M4 12h8m-8 6h16"
+          />
+        </svg>
+      </button>
+      <div
+        style={{
+          width: dropdownOpen ? "250px" : "0",
+          height: "100%",
+          position: "fixed",
+          zIndex: 1,
+          top: 0,
+          left: 0,
+          backgroundColor: "rgba(255,255,255,0.9)",
+          overflowX: "hidden",
+          transition: "0.5s",
+          paddingTop: "60px",
+        }}
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M4 6h16M4 12h8m-8 6h16"
-        />
-      </svg>
-    </button>
-    {dropdownOpen && (
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <NavBarItems user={user} onLogout={handleLogOut} />
-      </ul>
-    )}
-  </div>
-);
+        <CleanNavBarItems user={user} onLogout={handleLogOut} />
+      </div>
+    </div>
+  );
+};
 
 const Logo = () => (
   <div className="flex justify-around items-center lg:justify-start">
@@ -153,6 +181,25 @@ const NavBarItems = ({ user, onLogout }) => (
       </button>
     </li>
   </>
+);
+
+const CleanNavBarItems = ({ user, onLogout }) => (
+  <div className="flex flex-col space-y-4 px-4">
+    <Link href="/all-locations" className="transition duration-300 p-2 rounded">
+      EBL Locations
+    </Link>
+    {user?.role === "admin" && (
+      <Link href="/dashboard" className="transition duration-300   p-2 rounded">
+        Dashboard
+      </Link>
+    )}
+    <div
+      onClick={onLogout}
+      className="transition duration-300  p-2 rounded text-primary"
+    >
+      Logout
+    </div>
+  </div>
 );
 
 export default Navbar;
