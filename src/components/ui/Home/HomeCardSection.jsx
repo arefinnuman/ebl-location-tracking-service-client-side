@@ -34,16 +34,17 @@ const HomeCardSection = () => {
     },
     {
       id: 3,
-      title: `<span class="text-primary text-2xl font-bold">Agent Outlet</span>`,
-      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfAgentOutlets}</span> Agent Banking Outlets across the Country`,
+      title: `<span class="text-primary text-2xl font-bold">Agent Banking Outlet</span>`,
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfAgentOutlets}</span> Agent Outlets across the Country`,
       image: "https://i.ibb.co/Gs9Lgnv/IMG-2729.jpg",
       link: "/agent-banking-outlets",
     },
     {
       id: 4,
       title: `<span class="text-primary text-2xl font-bold">EBL 365 Booth</span>`,
-      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfEbl365Booths}</span> Ebl 365 Booths across the country with a fleet size 278`,
-      image: "https://i.ibb.co/tJYMXTL/IMG-2732.jpg",
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfEbl365Booths}</span> EBL 365 Booths across the country with a fleet size 278`,
+      image:
+        "https://i.ibb.co/0swzzVq/Whats-App-Image-2022-11-25-at-4-53-24-PM-2.jpg",
       link: "/ebl-365-booths",
     },
   ];
