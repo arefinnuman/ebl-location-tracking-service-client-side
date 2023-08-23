@@ -70,8 +70,7 @@ const NavMenu = () => {
       <NavLink href="/dashboard-locations/agent-outlets">
         View Agent Outlets
       </NavLink>
-      <NavLink href="/dashboard-locations/ebl-365">View EBL 365 Booths</NavLink>
-
+      <NavLink href="/dashboard-locations/ebl-365">View EBL 365</NavLink>
       <NavLink href="/branches/create">Create Branch</NavLink>
       <NavLink href="/sub-branches/create">Create sub Branch</NavLink>
       <NavLink href="/agent-banking-outlets/create">
@@ -124,7 +123,7 @@ const MobileSlider = ({ user, onLogout }) => (
       href="/dashboard-locations/ebl-365"
       className="transition duration-300 p-2 rounded"
     >
-      View EBL 365 Booths
+      View EBL 365
     </Link>
 
     <Link href="/users" className="transition duration-300 p-2 rounded">

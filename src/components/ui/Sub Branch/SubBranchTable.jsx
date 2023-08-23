@@ -75,10 +75,10 @@ const SubBranchTable = () => {
         </div>
 
         <div className="w-full max-w-3xl px-6 mx-auto bg-white rounded-lg mb-6">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg">
             <table className="table w-full border-collapse">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="bg-blue-500 text-white">
                   <th className="px-4 py-3 border">Sl</th>
                   <th className="px-4 py-3 border">Name</th>
                   <th className="px-4 py-3 border">District</th>
@@ -88,7 +88,10 @@ const SubBranchTable = () => {
               </thead>
               <tbody>
                 {filteredSubBranches.map((subBranch, index) => (
-                  <tr className="hover:bg-gray-50" key={subBranch._id}>
+                  <tr
+                    className="hover:bg-blue-100 transition duration-300"
+                    key={subBranch._id}
+                  >
                     <td className="px-4 py-3 text-center border">
                       {index + 1}
                     </td>

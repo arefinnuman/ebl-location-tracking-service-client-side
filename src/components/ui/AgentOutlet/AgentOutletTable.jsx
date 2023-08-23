@@ -1,5 +1,6 @@
 import { useGetAgentOutletsQuery } from "@/redux/api/api";
 import { useState } from "react";
+import { FaEye } from "react-icons/fa";
 import LoadingUi from "../LoadingUi";
 import AgentModal from "../MapModal/AgentModal";
 
@@ -70,20 +71,23 @@ const AgentOutletTable = () => {
         </div>
 
         <div className="w-full max-w-3xl px-6 mx-auto bg-white rounded-lg mb-6">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg">
             <table className="table w-full border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-3 border">Sl</th>
-                  <th className="px-4 py-3 border">Name</th>
-                  <th className="px-4 py-3 border">District</th>
-                  <th className="px-4 py-3 border">Address</th>
-                  <th className="px-4 py-3 border">Location</th>
+                <tr className="bg-blue-500 text-white">
+                  <th className="px-4 py-3">Sl</th>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">District</th>
+                  <th className="px-4 py-3">Address</th>
+                  <th className="px-4 py-3">Location</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredAgentOutlets.map((agent, index) => (
-                  <tr className="hover:bg-gray-50" key={agent._id}>
+                  <tr
+                    className="hover:bg-blue-100 transition duration-300"
+                    key={agent._id}
+                  >
                     <td className="px-4 py-3 text-center border">
                       {index + 1}
                     </td>
@@ -94,9 +98,10 @@ const AgentOutletTable = () => {
                     </td>
                     <td className="px-4 py-3 border">
                       <button
-                        className="btn btn-primary btn-sm btn-outline btn-ghost"
+                        className="flex items-center px-3 py-1.5 border text-black border-primary rounded-full shadow hover:bg-primary hover:border-primary transition duration-300 hover:text-white"
                         onClick={() => setSelectedAgent(agent)}
                       >
+                        <FaEye className="mr-2" />
                         View
                       </button>
                     </td>

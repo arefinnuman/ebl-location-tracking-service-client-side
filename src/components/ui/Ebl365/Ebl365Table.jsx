@@ -1,5 +1,6 @@
 import { useGet365BoothsQuery } from "@/redux/api/api";
 import { useState } from "react";
+import { FaEye } from "react-icons/fa";
 import LoadingUi from "../LoadingUi";
 import Ebl365Modal from "../MapModal/Ebl365Modal";
 
@@ -85,21 +86,24 @@ const Ebl365Table = () => {
         </div>
 
         <div className="w-full max-w-4xl px-6 mx-auto bg-white rounded-lg mb-6">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg">
             <table className="table w-full border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-3 border">Sl</th>
-                  <th className="px-4 py-3 border">Name</th>
-                  <th className="px-4 py-3 border">District</th>
-                  <th className="px-4 py-3 border">Address</th>
-                  <th className="px-4 py-3 border">Device</th>
-                  <th className="px-4 py-3 border">Location</th>
+                <tr className="bg-blue-500 text-white">
+                  <th className="px-4 py-3">Sl</th>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">District</th>
+                  <th className="px-4 py-3">Address</th>
+                  <th className="px-4 py-3">Device</th>
+                  <th className="px-4 py-3">Location</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredEbl365booths.map((ebl365, index) => (
-                  <tr className="hover:bg-gray-50" key={ebl365._id}>
+                  <tr
+                    className="hover:bg-blue-100 transition duration-300"
+                    key={ebl365._id}
+                  >
                     <td className="px-4 py-3 text-center border">
                       {index + 1}
                     </td>
@@ -115,9 +119,10 @@ const Ebl365Table = () => {
                     </td>
                     <td className="px-4 py-3 border">
                       <button
-                        className="btn btn-primary btn-sm btn-outline btn-ghost"
+                        className="flex items-center px-3 py-1.5 border text-black border-primary rounded-full shadow hover:bg-primary hover:border-primary transition duration-300 hover:text-white"
                         onClick={() => setSelectedBooth(ebl365)}
                       >
+                        <FaEye className="mr-2" />
                         View
                       </button>
                     </td>

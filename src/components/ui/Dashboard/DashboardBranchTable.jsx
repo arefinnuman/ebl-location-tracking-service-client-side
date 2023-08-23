@@ -113,22 +113,25 @@ const DashboardBranchTable = () => {
           </select>
         </div>
         <div className="w-full max-w-5xl mx-auto bg-white rounded-lg mb-6">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg">
             <table className="table w-full border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-3 border">Sl</th>
-                  <th className="px-4 py-3 border">Name</th>
-                  <th className="px-4 py-3 border">District</th>
-                  <th className="px-4 py-3 border">Address</th>
-                  <th className="px-4 py-3 border">Location</th>
-                  <th className="px-4 py-3 border">Edit</th>
-                  <th className="px-4 py-3 border">Delete</th>
+                <tr className="bg-blue-500 text-white">
+                  <th className="px-4 py-3">Sl</th>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">District</th>
+                  <th className="px-4 py-3">Address</th>
+                  <th className="px-4 py-3">Location</th>
+                  <th className="px-4 py-3">Edit</th>
+                  <th className="px-4 py-3">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredBranches.map((branch, index) => (
-                  <tr className="hover:bg-gray-50" key={branch._id}>
+                  <tr
+                    className="hover:bg-blue-100 transition duration-300"
+                    key={branch._id}
+                  >
                     <td className="px-4 py-3 text-center border">
                       {index + 1}
                     </td>

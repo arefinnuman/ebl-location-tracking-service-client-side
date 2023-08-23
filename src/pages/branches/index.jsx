@@ -3,9 +3,6 @@ import BranchMapComponent from "@/components/ui/Branch/BrachMap";
 import BranchTable from "@/components/ui/Branch/BranchTable";
 
 const BranchesPage = () => {
-
-  
-
   return (
     <>
       <section className="flex justify-center flex-col md:flex-row w-full">
