@@ -178,14 +178,13 @@ const FootPrintMap = () => {
                   position={{ lat: location.lat, lng: location.lng }}
                 >
                   <div className="bg-white p-3 rounded">
-                    <h3 className="font-semibold mb-2">
-                      {districtNames[index].charAt(0).toUpperCase() +
-                        districtNames[index].slice(1)}
+                    <h3 className="font-semibold mb-2 uppercase">
+                      {districtNames[index]}
                     </h3>
                     {[
-                      { type: "Branches", key: "branches" },
-                      { type: "SubBranches", key: "subbranches" },
-                      { type: "Agent Outlets", key: "agentOutlets" },
+                      { type: "Branch", key: "branches" },
+                      { type: "SubBranch", key: "subbranches" },
+                      { type: "Agent Outlet", key: "agentOutlets" },
                       { type: "EBL365", key: "ebl365Booths" },
                     ].map(({ type, key }) => (
                       <p className="text-sm mb-1" key={key}>

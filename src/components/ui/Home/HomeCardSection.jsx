@@ -12,47 +12,38 @@ const HomeCardSection = () => {
   const { data: agentOutletsData } = useGetAgentOutletsQuery();
   const { data: ebl365Data } = useGet365BoothsQuery();
 
-  const branches = branchesData?.data || [];
-  const subBranches = subBranchesData?.data || [];
-  const agentOutlets = agentOutletsData?.data || [];
-  const ebl365Booths = ebl365Data?.data || [];
-
-  const numberOfBranches = branches?.length;
-  const numberOfSubBranches = subBranches?.length;
-  const numberOfAgentOutlets = agentOutlets?.length;
-  const numberOfEbl365Booths = ebl365Booths?.length;
+  const numberOfBranches = branchesData?.data?.length;
+  const numberOfSubBranches = subBranchesData?.data?.length;
+  const numberOfAgentOutlets = agentOutletsData?.data?.length;
+  const numberOfEbl365Booths = ebl365Data?.data?.length;
 
   const cardData = [
     {
       id: 1,
-      title: "Branches",
-      description: `${numberOfBranches} Branches available all over the Country`,
-      image:
-        "https://images.unsplash.com/photo-1601041084273-6114cad589d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      title: `<span class="text-primary text-2xl font-bold">Branch</span>`,
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfBranches}</span> Branches across the country.`,
+      image: "https://i.ibb.co/c1VZf8v/IMG-2728.jpg",
       link: "/branches",
     },
     {
       id: 2,
-      title: "Sub Branches",
-      description: `${numberOfSubBranches} Sub Branches available all over the Country`,
-      image:
-        "https://images.unsplash.com/photo-1642060731115-ee52a3c78b04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      title: `<span class="text-primary text-2xl font-bold">Sub Branch</span>`,
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfSubBranches}</span> Sub Branches across the Country`,
+      image: "https://i.ibb.co/wL33r5X/IMG-2734.jpg",
       link: "/sub-branches",
     },
     {
       id: 3,
-      title: "Agent Banking Outlets",
-      description: `${numberOfAgentOutlets} Agent Banking Outlets available all over the Country`,
-      image:
-        "https://images.unsplash.com/photo-1642060731141-3899c9ad2308?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      title: `<span class="text-primary text-2xl font-bold">Agent Outlet</span>`,
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfAgentOutlets}</span> Agent Banking Outlets across the Country`,
+      image: "https://i.ibb.co/Gs9Lgnv/IMG-2729.jpg",
       link: "/agent-banking-outlets",
     },
     {
       id: 4,
-      title: "Ebl 365 Booths",
-      description: `${numberOfEbl365Booths} Ebl 365 Booths available all over the Country`,
-      image:
-        "https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      title: `<span class="text-primary text-2xl font-bold">EBL 365 Booth</span>`,
+      description: `Having <span class="text-blue-500 text-xl font-bold">${numberOfEbl365Booths}</span> Ebl 365 Booths across the country with a fleet size 278`,
+      image: "https://i.ibb.co/tJYMXTL/IMG-2732.jpg",
       link: "/ebl-365-booths",
     },
   ];
