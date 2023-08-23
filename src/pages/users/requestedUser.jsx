@@ -1,10 +1,15 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import LoadingUi from "@/components/ui/LoadingUi";
+import {
+  useApprovedByAdminMutation,
+  useGetAllUserQuery,
+} from "@/redux/api/api";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { FaUser, FaUserCog } from "react-icons/fa";
 
 const RequestedUserPage = () => {
-  const { data, refetch } = useGetAllUserQuery(undefined, {
+  const { data, isLoading, refetch } = useGetAllUserQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
   });
@@ -37,10 +42,26 @@ const RequestedUserPage = () => {
     }
   };
 
+  const noUser = users?.length <= 0;
+
+  if (noUser) {
+    return (
+      <div>
+        <h1 className="text-xl font-semibold mb-8 text-center my-4">
+          No User Found
+        </h1>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    <LoadingUi />;
+  }
+
   return (
     <div>
       <section>
-        {requestedUser?.length === 0 ? (
+        {requestedUser?.length <= 0 ? (
           <h1 className="text-xl font-semibold mb-8 text-center my-4">
             No Requested User
           </h1>

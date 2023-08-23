@@ -85,7 +85,7 @@ const MobileDropdown = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownOpen]);
+  }, [dropdownOpen, toggleDropdown]);
 
   return (
     <div className="dropdown lg:hidden relative" ref={dropdownRef}>

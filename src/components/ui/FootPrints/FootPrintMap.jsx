@@ -46,7 +46,7 @@ const FootPrintMap = () => {
 
   const uniqueDistricts = [];
   const districtMapping = {
-    chattogram: "chittagong",
+    chittagong: "chattogram",
   };
 
   combinedData.forEach((item) => {
@@ -70,11 +70,13 @@ const FootPrintMap = () => {
       item.subBranchDivision ||
       item.agentDivision ||
       item.ebl365Division
-    ).toLowerCase();
+    )
+      .toLowerCase()
+      .replace(/\s+/g, "");
     const normalizedDistrict = districtMapping[district] || district;
 
     if (!districtLocations[normalizedDistrict]) {
-      districtLocations[normalizedDistrict] = null; // Initialize with null
+      districtLocations[normalizedDistrict] = null;
     }
 
     if (item.branchLocation || item.subBranchLocation || item.agentLocation) {
@@ -148,6 +150,12 @@ const FootPrintMap = () => {
     lng: (BangladeshBounds.east + BangladeshBounds.west) / 2,
   };
 
+  const yellowIcon = {
+    url: "https://i.ibb.co/Kyk3Byx/clipart2368050.png",
+    scaledSize: new google.maps.Size(25, 30),
+    anchor: new google.maps.Point(20, 60),
+  };
+
   return (
     <div>
       <GoogleMap
@@ -162,59 +170,30 @@ const FootPrintMap = () => {
               key={index}
               position={{ lat: location.lat, lng: location.lng }}
               onClick={() => setSelectedMarkerIndex(index)}
+              icon={yellowIcon}
             >
               {selectedMarkerIndex === index && (
                 <InfoWindow
                   onCloseClick={() => setSelectedMarkerIndex(null)}
                   position={{ lat: location.lat, lng: location.lng }}
                 >
-                  <div className="mb-5 bg-white px-4 py-3 rounded-md shadow-md">
-                    <h3 className="text-3xl font-semibold capitalize mb-2">
+                  <div className="bg-white p-3 rounded">
+                    <h3 className="font-semibold mb-2">
                       {districtNames[index].charAt(0).toUpperCase() +
                         districtNames[index].slice(1)}
                     </h3>
-                    <p className="font-medium mb-2">
-                      {districtCounts[districtNames[index]].branches > 0 ? (
-                        <p>
-                          Number of Branches:{" "}
-                          {districtCounts[districtNames[index]].branches}
-                        </p>
-                      ) : (
-                        "No available branches"
-                      )}
-                    </p>
-                    <p className="font-medium mb-2">
-                      {districtCounts[districtNames[index]].subbranches > 0 ? (
-                        <p>
-                          {" "}
-                          Number of Subbranches:{" "}
-                          {districtCounts[districtNames[index]].subbranches}
-                        </p>
-                      ) : (
-                        "No available subbranches"
-                      )}
-                    </p>
-                    <p className="font-medium mb-2">
-                      {districtCounts[districtNames[index]].agentOutlets > 0 ? (
-                        <p>
-                          {" "}
-                          Number of Agent Outlets:{" "}
-                          {districtCounts[districtNames[index]].agentOutlets}
-                        </p>
-                      ) : (
-                        "No available agent outlets"
-                      )}
-                    </p>
-                    <p className="font-medium mb-2">
-                      {districtCounts[districtNames[index]].ebl365Booths > 0 ? (
-                        <p>
-                          Number of EBL365 Booths:{" "}
-                          {districtCounts[districtNames[index]].ebl365Booths}
-                        </p>
-                      ) : (
-                        "No available EBL365 booths"
-                      )}
-                    </p>
+                    {[
+                      { type: "Branches", key: "branches" },
+                      { type: "SubBranches", key: "subbranches" },
+                      { type: "Agent Outlets", key: "agentOutlets" },
+                      { type: "EBL365", key: "ebl365Booths" },
+                    ].map(({ type, key }) => (
+                      <p className="text-sm mb-1" key={key}>
+                        {`${type}: ${
+                          districtCounts[districtNames[index]][key] || 0
+                        }`}
+                      </p>
+                    ))}
                   </div>
                 </InfoWindow>
               )}
