@@ -2,7 +2,7 @@ const DeleteConfirmationModal = ({ onConfirm, onCancel }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-4 w-full sm:w-80 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-lg opacity-75 border-2 border-primary"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-700 rounded-lg"></div>
         <h2 className="text-xl font-semibold text-white mb-2 relative z-10">
           Confirm Delete
         </h2>

@@ -189,7 +189,7 @@ const FootPrintMap = () => {
                     ].map(({ type, key }) => (
                       <p className="text-sm mb-1" key={key}>
                         {`${type}: ${
-                          districtCounts[districtNames[index]][key] || 0
+                          districtCounts[districtNames[index]]?.[key] || 0
                         }`}
                       </p>
                     ))}

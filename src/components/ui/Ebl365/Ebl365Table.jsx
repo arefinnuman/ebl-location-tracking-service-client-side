@@ -13,6 +13,8 @@ const Ebl365Table = () => {
   const boothDivisions = ebl365booths?.map((booth) => booth.ebl365Division);
   const uniqueBranchDivisions = [...new Set(boothDivisions)];
 
+  console.log(uniqueBranchDivisions);
+
   const [searchInput, setSearchInput] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
   const [selectedBooth, setSelectedBooth] = useState(null);
@@ -79,7 +81,7 @@ const Ebl365Table = () => {
             <option value="">All Districts</option>
             {uniqueBranchDivisions.map((division) => (
               <option key={division} value={division}>
-                {division}
+                {division?.charAt(0).toUpperCase() + division?.slice(1)}
               </option>
             ))}
           </select>
